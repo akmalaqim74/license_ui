@@ -87,14 +87,23 @@ import html2canvas from 'html2canvas';
 
           <!-- Cards Display -->
           <div class="space-y-12">
-            <!-- Front Card -->
+            <!-- Flippable Card Container -->
             <div class="flex justify-center">
-              <app-license-front-card [license]="license"></app-license-front-card>
+              <div class="flip-card-container" (click)="flipCard()">
+                <div class="flip-card" [class.flipped]="isFlipped">
+                  <div class="flip-card-front">
+                    <app-license-front-card [license]="license"></app-license-front-card>
+                  </div>
+                  <div class="flip-card-back">
+                    <app-license-back-card [license]="license"></app-license-back-card>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Back Card -->
-            <div class="flex justify-center">
-              <app-license-back-card [license]="license"></app-license-back-card>
+            <!-- Flip Instruction -->
+            <div class="text-center">
+              <p class="text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
             </div>
 
             <!-- Certificate -->
@@ -177,7 +186,45 @@ import html2canvas from 'html2canvas';
       </div>
     </div>
   `,
-  styles: []
+  styles: [`
+    .flip-card-container {
+      perspective: 1500px;
+      cursor: pointer;
+    }
+
+    .flip-card {
+      position: relative;
+      width: 420px;
+      height: 264px;
+      transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-container:hover .flip-card {
+      transform: scale(1.02);
+    }
+
+    .flip-card-container:hover .flip-card.flipped {
+      transform: rotateY(180deg) scale(1.02);
+    }
+  `]
 })
 export class ViewLicenseComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -191,6 +238,7 @@ export class ViewLicenseComponent implements OnInit {
   errorMessage: string | null = null;
   showUpdateStatsModal = false;
   updatingStats = false;
+  isFlipped = false;
 
   statsForm: FormGroup;
 
@@ -325,5 +373,9 @@ export class ViewLicenseComponent implements OnInit {
 
   goHome(): void {
     this.router.navigate(['/license']);
+  }
+
+  flipCard(): void {
+    this.isFlipped = !this.isFlipped;
   }
 }
