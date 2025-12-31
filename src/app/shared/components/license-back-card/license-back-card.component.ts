@@ -104,7 +104,11 @@ interface ColorTheme {
     }
 
     .back-theme {
-      background-color: #f1f3f5;
+      background: linear-gradient(145deg, rgba(241, 243, 245, 0.95) 0%, rgba(241, 243, 245, 0.95) 100%),
+                  url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
       color: #343a40;
     }
 

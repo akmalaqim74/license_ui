@@ -8,24 +8,7 @@ import { RenewComponent } from './pages/renew/renew.component';
 import { ViewLicenseComponent } from './pages/view-license/view-license.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/admin',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/views/admin/dashboard/dashboard.routes').then(m => m.dashboardRoutes)
-  },
-  {
-    path: 'notion-callback',
-    component: NotionCallbackComponent
-  },
+  
   {
     path: 'license',
     children: [

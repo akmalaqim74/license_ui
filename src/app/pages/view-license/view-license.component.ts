@@ -20,7 +20,7 @@ import html2canvas from 'html2canvas';
     LicenseCertificateComponent
   ],
   template: `
-    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-12 px-4">
+    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-12 px-4" style="background-image: url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');">
       <div class="container mx-auto max-w-6xl">
         <!-- Loading State -->
         <div *ngIf="loading" class="text-center py-20">
@@ -42,14 +42,13 @@ import html2canvas from 'html2canvas';
         </div>
 
         <!-- License Display -->
-        <div *ngIf="!loading && license" class="space-y-8">
+        <div *ngIf="!loading && license" class="space-y-8" >
           <!-- Header -->
           <div class="text-center">
-            <div class="text-7xl mb-4 animate-bounce">🎉🎊🌟</div>
             <h1 class="text-5xl md:text-6xl font-black mb-4 text-yellow-300" style="text-shadow: 3px 3px 0px #FF1493, 6px 6px 0px #00BCD4;">
               Your Official Single License!
             </h1>
-            <p class="text-2xl text-white font-bold">Look at you, you're officially SINGLE! 🎉</p>
+            
           </div>
 
           <!-- Action Buttons -->

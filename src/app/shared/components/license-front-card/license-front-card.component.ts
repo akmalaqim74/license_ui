@@ -88,7 +88,11 @@ interface ColorTheme {
       font-family: 'Inter', sans-serif;
       width: 420px;
       height: 264px;
-      background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+      background: linear-gradient(145deg, rgba(248, 249, 250, 0.95) 0%, rgba(233, 236, 239, 0.9) 100%),
+                  url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
       border: 1px solid #dee2e6;
       border-radius: 12px;
       overflow: hidden;

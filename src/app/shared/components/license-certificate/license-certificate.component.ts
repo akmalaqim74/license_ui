@@ -7,133 +7,285 @@ import { License } from '../../../core/models/api/v1/license.model';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&family=Merriweather:ital,wght@0,400;1,400&display=swap');
+    <div id="license-certificate" class="certificate-container">
+      <!-- Decorative Border -->
+      <div class="certificate-border">
+        <span class="corner-star top-left">★</span>
+        <span class="corner-star top-right">★</span>
+        <span class="corner-star bottom-left">★</span>
+        <span class="corner-star bottom-right">★</span>
+      </div>
 
-      .prof-cert-container {
-        font-family: 'Merriweather', serif;
-        background-color: #fdfcf8;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAADFJREFUGJWVzLEBADAEw/Cj+6Z4hA6hA2gENjAhcDEa0Yvj+4Hl4ECKAAs0nJ+i2R8oAHoGzQJUNvwAAAAASUVORK5CYII=');
-        position: relative;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        border: 1px solid #e0d7c5;
-      }
-
-      .prof-cert-border {
-        position: absolute;
-        inset: 1rem;
-        border: 1px solid #c0a060;
-      }
-
-      .prof-cert-border::before {
-        content: '';
-        position: absolute;
-        inset: 4px;
-        border: 1px solid #c0a060;
-        opacity: 0.7;
-      }
-      
-      .prof-cert-border::after {
-        content: '★';
-        position: absolute;
-        top: -8px; left: -8px;
-        font-size: 16px;
-        color: #c0a060;
-      }
-      /* Add more corner stars if desired */
-
-      .prof-gold-seal {
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        background: radial-gradient(ellipse at center, #F0E68C 0%, #B8860B 100%);
-        border: 4px solid #DAA520;
-        box-shadow: 1px 1px 4px rgba(0,0,0,0.4), inset 0 0 8px rgba(0,0,0,0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        color: #8B4513;
-        font-weight: 700;
-      }
-      .prof-gold-seal-text {
-        font-family: 'Playfair Display', serif;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-      }
-       /* Simple SVG circle text path - more complex SVG can be used for better effect */
-      .prof-gold-seal-text svg {
-        width: 100%;
-        height: 100%;
-      }
-
-    </style>
-
-    <div id="license-certificate" class="prof-cert-container rounded-lg" style="aspect-ratio: 1.414; max-width: 800px; width: 100%;">
-      <div class="prof-cert-border"></div>
-      <div class="relative z-10 h-full w-full p-12 flex flex-col items-center justify-between text-center text-gray-800">
-
+      <!-- Content -->
+      <div class="certificate-content">
         <!-- Header -->
         <div class="header-section">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900" style="font-family: 'Playfair Display', serif;">
-            Certificate of Single Status
-          </h1>
-          <div class="w-64 h-px bg-gray-300 mx-auto my-3"></div>
-          <p class="text-sm text-gray-600">This certificate is awarded to</p>
+          <p class="pre-title">DEPARTMENT OF SELF-PARTNERED AFFAIRS</p>
+          <h1 class="main-title">Certificate of Single Status</h1>
+          <div class="divider"></div>
+          <p class="sub-text">This certificate is proudly awarded to</p>
         </div>
 
-        <!-- Recipient -->
-        <div class="content-section my-4">
-          <h2 class="text-6xl md:text-7xl text-[#a07e3e]" style="font-family: 'Great Vibes', cursive;">
-            {{ license?.lcns_name }}
-          </h2>
-          <p class="text-base text-gray-600 mt-2">for demonstrating outstanding independence and commitment to self-partnership.</p>
-        </div>
+        <!-- Recipient Name -->
+        <h2 class="recipient-name">{{ license?.lcns_name }}</h2>
+
+        <!-- Description -->
+        <p class="description-text">
+          For demonstrating outstanding independence and commitment to self-partnership
+          since <strong>{{ license?.lcns_single_since | date:'MMMM d, yyyy' }}</strong>.
+        </p>
 
         <!-- Title Awarded -->
-        <div class="my-4">
-          <p class="text-sm text-gray-600">Officially Awarded the Title Of</p>
-          <p class="text-3xl font-bold text-gray-800" style="font-family: 'Playfair Display', serif;">
-            "{{ license?.lcns_title }}"
-          </p>
+        <div class="title-section">
+          <p class="title-label">Officially Awarded the Title of</p>
+          <p class="title-value">"{{ license?.lcns_title }}"</p>
         </div>
-        
+
         <!-- Footer -->
-        <div class="footer-section w-full flex justify-between items-end mt-8">
-          
+        <div class="footer-section">
           <!-- Signature -->
-          <div class="signature-area text-center w-1/3">
-            <p class="text-3xl -mb-3 text-gray-800" style="font-family: 'Great Vibes', cursive;">S. Developer</p>
-            <div class="w-full border-b border-gray-400"></div>
-            <p class="text-xs font-semibold text-gray-700 mt-1">Single Developer</p>
-            <p class="text-[10px] text-gray-500">Dept. of Self-Partnered Affairs</p>
+          <div class="footer-block">
+            <p class="signature-script">S. Developer</p>
+            <div class="footer-line"></div>
+            <p class="footer-label">Director of Single Affairs</p>
           </div>
 
           <!-- Seal -->
-          <div class="prof-gold-seal">
-            <div class="prof-gold-seal-text">
-                <svg viewBox="0 0 100 100">
-                    <path id="circlePath" fill="none" d="M 10, 50 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"/>
-                    <text font-size="10" font-weight="bold" fill="#8B4513">
-                        <textPath href="#circlePath">★ CERTIFIED SINGLE ★ OFFICIAL</textPath>
-                    </text>
-                </svg>
-            </div>
+          <div class="gold-seal">
+            <span class="seal-star">★</span>
+            <span class="seal-text">CERTIFIED</span>
+            <span class="seal-sub">SINGLE</span>
           </div>
 
           <!-- Date -->
-          <div class="date-area text-center w-1/3">
-            <p class="text-xl font-semibold text-gray-800" style="font-family: 'Merriweather', serif;">{{ license?.lcns_issued_at | date:'MM.dd.yyyy' }}</p>
-            <div class="w-full border-b border-gray-400"></div>
-            <p class="text-xs font-semibold text-gray-700 mt-1">Date of Issue</p>
+          <div class="footer-block">
+            <p class="date-value">{{ license?.lcns_issued_at | date:'MM.dd.yyyy' }}</p>
+            <div class="footer-line"></div>
+            <p class="footer-label">Date of Issue</p>
           </div>
-
         </div>
+
+        <!-- Bottom Info -->
+        <p class="bottom-info">
+          License #{{ license?.lcns_number }} • Valid until {{ license?.lcns_expires_at | date:'MM/dd/yyyy' }} • {{ license?.state?.stt_name }}, MY
+        </p>
       </div>
     </div>
   `,
+  styles: [`
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Lato:wght@400;700&display=swap');
+
+    .certificate-container {
+      font-family: 'Lato', sans-serif;
+      width: 700px;
+      height: 495px;
+      background-color: #fdfcf8;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAADFJREFUGJWVzLEBADAEw/Cj+6Z4hA6hA2gENjAhcDEa0Yvj+4Hl4ECKAAs0nJ+i2R8oAHoGzQJUNvwAAAAASUVORK5CYII=');
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border: 1px solid #e0d7c5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* Border */
+    .certificate-border {
+      position: absolute;
+      inset: 12px;
+      border: 2px solid #c0a060;
+      pointer-events: none;
+    }
+
+    .certificate-border::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid #c0a060;
+      opacity: 0.5;
+    }
+
+    .corner-star {
+      position: absolute;
+      font-size: 12px;
+      color: #c0a060;
+    }
+
+    .top-left { top: -7px; left: -7px; }
+    .top-right { top: -7px; right: -7px; }
+    .bottom-left { bottom: -7px; left: -7px; }
+    .bottom-right { bottom: -7px; right: -7px; }
+
+    /* Content */
+    .certificate-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 32px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    /* Header */
+    .header-section {
+      margin-bottom: 8px;
+    }
+
+    .pre-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #8b7355;
+      margin: 0 0 4px 0;
+    }
+
+    .main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin: 0;
+    }
+
+    .divider {
+      width: 150px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c0a060, transparent);
+      margin: 8px auto;
+    }
+
+    .sub-text {
+      font-size: 11px;
+      color: #666;
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* Recipient */
+    .recipient-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 42px;
+      color: #8b6914;
+      margin: 8px 0;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Description */
+    .description-text {
+      font-size: 11px;
+      line-height: 1.5;
+      color: #555;
+      margin: 0 0 12px 0;
+      max-width: 450px;
+    }
+
+    /* Title */
+    .title-section {
+      margin-bottom: 16px;
+    }
+
+    .title-label {
+      font-size: 10px;
+      color: #666;
+      margin: 0 0 2px 0;
+    }
+
+    .title-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin: 0;
+    }
+
+    /* Footer */
+    .footer-section {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: auto;
+      padding: 0 24px;
+    }
+
+    .footer-block {
+      width: 140px;
+      text-align: center;
+    }
+
+    .signature-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: 22px;
+      color: #333;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .footer-line {
+      height: 1px;
+      background: #aaa;
+      margin: 4px 0;
+    }
+
+    .footer-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: #666;
+      margin: 0;
+    }
+
+    .date-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+    }
+
+    /* Seal */
+    .gold-seal {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 30% 30%, #f5e6a3 0%, #d4af37 50%, #a67c00 100%);
+      border: 3px solid #b8860b;
+      box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #5c4a1f;
+    }
+
+    .seal-star {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .seal-text {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .seal-sub {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    /* Bottom Info */
+    .bottom-info {
+      font-size: 8px;
+      color: #999;
+      margin: 12px 0 0 0;
+    }
+  `]
 })
 export class LicenseCertificateComponent {
   @Input() license: License | null = null;
