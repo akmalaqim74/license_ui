@@ -79,7 +79,7 @@ import { License } from '../../../core/models/api/v1/license.model';
       font-family: 'Lato', sans-serif;
       width: 100%;
       max-width: 700px;
-      aspect-ratio: 700 / 495;
+      min-height: 495px;
       background-color: #fdfcf8;
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAADFJREFUGJWVzLEBADAEw/Cj+6Z4hA6hA2gENjAhcDEa0Yvj+4Hl4ECKAAs0nJ+i2R8oAHoGzQJUNvwAAAAASUVORK5CYII=');
       position: relative;
@@ -93,7 +93,7 @@ import { License } from '../../../core/models/api/v1/license.model';
     /* Border */
     .certificate-border {
       position: absolute;
-      inset: 1.7%;
+      inset: 12px;
       border: 2px solid #c0a060;
       pointer-events: none;
     }
@@ -108,7 +108,7 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     .corner-star {
       position: absolute;
-      font-size: clamp(10px, 1.7vw, 12px);
+      font-size: 12px;
       color: #c0a060;
     }
 
@@ -121,8 +121,8 @@ import { License } from '../../../core/models/api/v1/license.model';
     .certificate-content {
       position: relative;
       z-index: 1;
-      height: 100%;
-      padding: 6.5% 6.8%;
+      min-height: 495px;
+      padding: 32px 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -132,34 +132,34 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Header */
     .header-section {
-      margin-bottom: 1.6%;
+      margin-bottom: 8px;
     }
 
     .pre-title {
-      font-size: clamp(7px, 1.3vw, 9px);
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 2px;
       color: #8b7355;
-      margin: 0 0 0.8% 0;
+      margin: 0 0 4px 0;
     }
 
     .main-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(20px, 4vw, 28px);
+      font-size: 28px;
       font-weight: 700;
       color: #2c2c2c;
       margin: 0;
     }
 
     .divider {
-      width: clamp(100px, 21.4%, 150px);
+      width: 150px;
       height: 1px;
       background: linear-gradient(90deg, transparent, #c0a060, transparent);
-      margin: 1.6% auto;
+      margin: 8px auto;
     }
 
     .sub-text {
-      font-size: clamp(9px, 1.6vw, 11px);
+      font-size: 11px;
       color: #666;
       font-style: italic;
       margin: 0;
@@ -168,36 +168,35 @@ import { License } from '../../../core/models/api/v1/license.model';
     /* Recipient */
     .recipient-name {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(28px, 6vw, 42px);
+      font-size: 42px;
       color: #8b6914;
-      margin: 1.6% 0;
+      margin: 8px 0;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
     /* Description */
     .description-text {
-      font-size: clamp(9px, 1.6vw, 11px);
+      font-size: 11px;
       line-height: 1.5;
       color: #555;
-      margin: 0 0 2.4% 0;
-      max-width: 90%;
-      padding: 0 5%;
+      margin: 0 0 12px 0;
+      max-width: 450px;
     }
 
     /* Title */
     .title-section {
-      margin-bottom: 3.2%;
+      margin-bottom: 16px;
     }
 
     .title-label {
-      font-size: clamp(8px, 1.4vw, 10px);
+      font-size: 10px;
       color: #666;
-      margin: 0 0 0.4% 0;
+      margin: 0 0 2px 0;
     }
 
     .title-value {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(16px, 3.1vw, 22px);
+      font-size: 22px;
       font-weight: 700;
       color: #2c2c2c;
       margin: 0;
@@ -210,39 +209,39 @@ import { License } from '../../../core/models/api/v1/license.model';
       justify-content: space-between;
       align-items: flex-end;
       margin-top: auto;
-      padding: 0 3.4%;
-      gap: 2%;
+      padding: 0 24px;
+      gap: 10px;
     }
 
     .footer-block {
       flex: 1;
-      min-width: 0;
+      min-width: 100px;
       text-align: center;
     }
 
     .signature-script {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(16px, 3.1vw, 22px);
+      font-size: 22px;
       color: #333;
       margin: 0;
-      line-height: 1;
+      line-height: 1.2;
     }
 
     .footer-line {
       height: 1px;
       background: #aaa;
-      margin: 0.8% 0;
+      margin: 4px 0;
     }
 
     .footer-label {
-      font-size: clamp(7px, 1.3vw, 9px);
+      font-size: 9px;
       font-weight: 600;
       color: #666;
       margin: 0;
     }
 
     .date-value {
-      font-size: clamp(11px, 2vw, 14px);
+      font-size: 14px;
       font-weight: 700;
       color: #333;
       margin: 0;
@@ -250,8 +249,8 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Seal */
     .gold-seal {
-      width: clamp(50px, 10vw, 70px);
-      height: clamp(50px, 10vw, 70px);
+      width: 70px;
+      height: 70px;
       flex-shrink: 0;
       border-radius: 50%;
       background: radial-gradient(ellipse at 30% 30%, #f5e6a3 0%, #d4af37 50%, #a67c00 100%);
@@ -267,19 +266,19 @@ import { License } from '../../../core/models/api/v1/license.model';
     }
 
     .seal-star {
-      font-size: clamp(10px, 2vw, 14px);
+      font-size: 14px;
       line-height: 1;
     }
 
     .seal-text {
-      font-size: clamp(7px, 1.3vw, 9px);
+      font-size: 9px;
       font-weight: 800;
       letter-spacing: 0.5px;
       line-height: 1;
     }
 
     .seal-sub {
-      font-size: clamp(6px, 1.1vw, 8px);
+      font-size: 8px;
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;
@@ -287,50 +286,199 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Bottom Info */
     .bottom-info {
-      font-size: clamp(6px, 1.1vw, 8px);
+      font-size: 8px;
       color: #999;
-      margin: 2.4% 0 0 0;
-      word-break: break-word;
+      margin: 12px 0 0 0;
     }
 
-    /* Mobile optimizations */
-    @media (max-width: 600px) {
-      .certificate-container {
-        border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* Tablet and below */
+    @media (max-width: 768px) {
+      .certificate-content {
+        padding: 28px 32px;
       }
 
-      .certificate-border {
-        inset: 2%;
+      .main-title {
+        font-size: 24px;
       }
 
-      .description-text {
-        max-width: 95%;
-        padding: 0 2%;
+      .recipient-name {
+        font-size: 36px;
+      }
+
+      .title-value {
+        font-size: 20px;
       }
 
       .footer-section {
-        gap: 1%;
+        padding: 0 12px;
+      }
+
+      .footer-block {
+        min-width: 80px;
+      }
+
+      .signature-script {
+        font-size: 20px;
+      }
+
+      .gold-seal {
+        width: 60px;
+        height: 60px;
+      }
+
+      .seal-star {
+        font-size: 12px;
+      }
+
+      .seal-text {
+        font-size: 8px;
+      }
+
+      .seal-sub {
+        font-size: 7px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .certificate-container {
+        border-radius: 4px;
+        min-height: 450px;
+      }
+
+      .certificate-border {
+        inset: 8px;
+      }
+
+      .certificate-content {
+        padding: 20px 16px;
+        min-height: 450px;
+      }
+
+      .pre-title {
+        font-size: 7px;
+        letter-spacing: 1.5px;
+      }
+
+      .main-title {
+        font-size: 20px;
+      }
+
+      .divider {
+        width: 100px;
+      }
+
+      .sub-text {
+        font-size: 9px;
+      }
+
+      .recipient-name {
+        font-size: 30px;
+        margin: 6px 0;
+      }
+
+      .description-text {
+        font-size: 9px;
+        margin: 0 0 10px 0;
+        max-width: 100%;
+      }
+
+      .title-section {
+        margin-bottom: 12px;
+      }
+
+      .title-label {
+        font-size: 8px;
+      }
+
+      .title-value {
+        font-size: 16px;
+      }
+
+      .footer-section {
+        padding: 0 8px;
+        gap: 8px;
+        flex-wrap: nowrap;
+      }
+
+      .footer-block {
+        min-width: 70px;
+        flex: 1;
+      }
+
+      .signature-script {
+        font-size: 18px;
+      }
+
+      .footer-label {
+        font-size: 7px;
+      }
+
+      .date-value {
+        font-size: 12px;
+      }
+
+      .gold-seal {
+        width: 50px;
+        height: 50px;
+        border-width: 2px;
+      }
+
+      .seal-star {
+        font-size: 10px;
+      }
+
+      .seal-text {
+        font-size: 7px;
+      }
+
+      .seal-sub {
+        font-size: 6px;
       }
 
       .bottom-info {
         font-size: 7px;
-        padding: 0 2%;
+        margin: 10px 0 0 0;
       }
     }
 
-    /* Very small screens */
-    @media (max-width: 400px) {
-      .certificate-border {
-        border-width: 1.5px;
+    /* Very small mobile */
+    @media (max-width: 360px) {
+      .certificate-content {
+        padding: 16px 12px;
       }
 
-      .certificate-border::before {
-        inset: 3px;
+      .main-title {
+        font-size: 18px;
+      }
+
+      .recipient-name {
+        font-size: 26px;
+      }
+
+      .title-value {
+        font-size: 14px;
+      }
+
+      .footer-block {
+        min-width: 60px;
+      }
+
+      .signature-script {
+        font-size: 16px;
+      }
+
+      .date-value {
+        font-size: 11px;
       }
 
       .gold-seal {
-        border-width: 2px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .bottom-info {
+        font-size: 6px;
       }
     }
   `]
