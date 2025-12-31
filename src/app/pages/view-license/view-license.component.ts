@@ -62,42 +62,41 @@ import html2canvas from 'html2canvas';
             <h1 class="text-5xl md:text-6xl font-black mb-4 text-yellow-300" style="text-shadow: 3px 3px 0px #FF1493, 6px 6px 0px #00BCD4;">
               Your Official Single License!
             </h1>
-            
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap justify-center gap-3 md:gap-4 px-4">
+          <div class="flex flex-wrap justify-center gap-4">
             <button
               (click)="downloadCard('license-front-card', 'single-license-front.png')"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Front
+              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Front Card
             </button>
             <button
               (click)="downloadCard('license-back-card', 'single-license-back.png')"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Back
+              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Back Card
             </button>
             <button
               (click)="downloadCard('license-certificate', 'single-license-certificate.png')"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Cert
+              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Certificate
             </button>
             <button
               (click)="downloadAll()"
               [disabled]="downloadingAll"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-purple-700 disabled:opacity-50">
-              <span *ngIf="!downloadingAll">📥 All</span>
-              <span *ngIf="downloadingAll">⏳</span>
+              class="px-6 py-3 bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-purple-700 disabled:opacity-50">
+              <span *ngIf="!downloadingAll">📥 Download All</span>
+              <span *ngIf="downloadingAll">⏳ Downloading...</span>
             </button>
             <button
               (click)="shareLink()"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
-              🔗 Share
+              class="px-6 py-3 bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
+              🔗 Share It!
             </button>
             <button
               (click)="toggleUpdateStatsModal()"
-              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
-              📊 Stats
+              class="px-6 py-3 bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
+              📊 Update Stats
             </button>
           </div>
 
@@ -109,13 +108,9 @@ import html2canvas from 'html2canvas';
           <!-- Cards Display -->
           <div class="space-y-8 md:space-y-12">
             <!-- Flippable Card Container -->
-            <div class="flex justify-center px-4">
-              <div class="flip-card-container"
-                   (click)="flipCard()"
-                   (mousemove)="onMouseMove($event)"
-                   (mouseleave)="onMouseLeave()">
-                <div class="flip-card"
-                     [style.transform]="getCardTransform()">
+            <div class="flex justify-center">
+              <div class="flip-card-container" (click)="flipCard()">
+                <div class="flip-card" [class.flipped]="isFlipped">
                   <div class="flip-card-front">
                     <app-license-front-card [license]="license"></app-license-front-card>
                   </div>
@@ -127,15 +122,13 @@ import html2canvas from 'html2canvas';
             </div>
 
             <!-- Flip Instruction -->
-            <div class="text-center px-4">
-              <p class="text-lg md:text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
+            <div class="text-center">
+              <p class="text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
             </div>
 
             <!-- Certificate -->
-            <div class="flex justify-center px-4">
-              <div class="certificate-wrapper">
-                <app-license-certificate [license]="license"></app-license-certificate>
-              </div>
+            <div class="flex justify-center">
+              <app-license-certificate [license]="license"></app-license-certificate>
             </div>
 
             <!-- Hidden container for "Download All" feature -->
@@ -325,13 +318,12 @@ import html2canvas from 'html2canvas';
       aspect-ratio: 420 / 264;
       max-width: 420px;
       max-height: 264px;
-      transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
       transform-style: preserve-3d;
-      will-change: transform;
     }
 
-    .flip-card-container:hover .flip-card {
-      transition: transform 1.0s ease-out;
+    .flip-card.flipped {
+      transform: rotateY(180deg);
     }
 
     @media (max-width: 480px) {
@@ -356,27 +348,11 @@ import html2canvas from 'html2canvas';
     }
 
     .flip-card-container:hover .flip-card {
-      filter: brightness(1.05) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+      transform: scale(1.02);
     }
 
-    .certificate-wrapper {
-      width: 100%;
-      max-width: 800px;
-      overflow-x: auto;
-    }
-
-    @media (max-width: 768px) {
-      .certificate-wrapper {
-        transform: scale(0.8);
-        transform-origin: top center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .certificate-wrapper {
-        transform: scale(0.6);
-        transform-origin: top center;
-      }
+    .flip-card-container:hover .flip-card.flipped {
+      transform: rotateY(180deg) scale(1.02);
     }
 
     /* Hidden container for download all */
@@ -420,10 +396,6 @@ export class ViewLicenseComponent implements OnInit {
   updatingStats = false;
   isFlipped = false;
   downloadingAll = false;
-
-  // 3D motion variables
-  cardRotateX = 0;
-  cardRotateY = 0;
 
   statsForm: FormGroup;
 
@@ -596,29 +568,4 @@ export class ViewLicenseComponent implements OnInit {
   flipCard(): void {
     this.isFlipped = !this.isFlipped;
   }
-
-  onMouseMove(event: MouseEvent): void {
-  const card = event.currentTarget as HTMLElement;
-  const rect = card.getBoundingClientRect();
-
-  const mouseX = (event.clientX - rect.left) / rect.width;
-  const mouseY = (event.clientY - rect.top) / rect.height;
-
-  // When flipped, invert the tilt direction for natural feel
-  const multiplier = this.isFlipped ? -1 : 1;
-  this.cardRotateY = (mouseX - 0.5) * 30 * multiplier;
-  this.cardRotateX = (mouseY - 0.5) * -30 * multiplier;
-}
-
-
-  onMouseLeave(): void {
-    // Reset rotation when mouse leaves
-    this.cardRotateX = 0;
-    this.cardRotateY = 0;
-  }
-
-getCardTransform(): string {
-  const baseRotateY = this.isFlipped ? 180 : 0;
-  return `rotateX(${this.cardRotateX}deg) rotateY(${baseRotateY + this.cardRotateY}deg)`;
-}
 }
