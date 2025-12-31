@@ -8,7 +8,11 @@ import { RenewComponent } from './pages/renew/renew.component';
 import { ViewLicenseComponent } from './pages/view-license/view-license.component';
 
 export const routes: Routes = [
-  
+  {
+    path: '',
+    redirectTo: '/license',
+    pathMatch: 'full'
+  },
   {
     path: 'license',
     children: [
@@ -32,6 +36,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/login'
+    redirectTo: '/license'
   }
 ];
