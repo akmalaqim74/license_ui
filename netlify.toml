@@ -1,9 +1,7 @@
 # Netlify configuration for Angular SPA
 
 [build]
-  # Replace 'dist/ILM_DASHBOARD/browser' with your actual build output directory
-  # Check angular.json > projects > architect > build > options > outputPath
-  publish = "dist/your-app-name/browser"
+  publish = "dist/ILM_DASHBOARD/browser"
   command = "npm run build"
 
 [[redirects]]
