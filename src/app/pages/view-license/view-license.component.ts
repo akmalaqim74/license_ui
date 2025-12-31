@@ -20,7 +20,7 @@ import html2canvas from 'html2canvas';
     LicenseCertificateComponent
   ],
   template: `
-    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-12 px-4 relative overflow-hidden" style="background-image: url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');">
+    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-8 md:py-12 px-4 relative overflow-hidden" style="background-image: url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');">
       <!-- Bubble decorations -->
       <div class="absolute inset-0 pointer-events-none">
         <div class="bubble" style="left: 5%; animation-delay: 0s;"></div>
@@ -56,79 +56,89 @@ import html2canvas from 'html2canvas';
         </div>
 
         <!-- License Display -->
-        <div *ngIf="!loading && license" class="space-y-8" >
+        <div *ngIf="!loading && license" class="space-y-6 md:space-y-8" >
           <!-- Header -->
           <div class="text-center">
-            <h1 class="text-5xl md:text-6xl font-black mb-4 text-yellow-300" style="text-shadow: 3px 3px 0px #FF1493, 6px 6px 0px #00BCD4;">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black mb-4 text-yellow-300 px-4" style="text-shadow: 3px 3px 0px #FF1493, 6px 6px 0px #00BCD4;">
               Your Official Single License!
             </h1>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap justify-center gap-4">
+          <div class="flex flex-wrap justify-center gap-3 md:gap-4 px-4">
             <button
               (click)="downloadCard('license-front-card', 'single-license-front.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
               📥 Front Card
             </button>
             <button
               (click)="downloadCard('license-back-card', 'single-license-back.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
               📥 Back Card
             </button>
             <button
               (click)="downloadCard('license-certificate', 'single-license-certificate.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
               📥 Certificate
             </button>
             <button
               (click)="downloadAll()"
               [disabled]="downloadingAll"
-              class="px-6 py-3 bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-purple-700 disabled:opacity-50">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-purple-700 disabled:opacity-50">
               <span *ngIf="!downloadingAll">📥 Download All</span>
               <span *ngIf="downloadingAll">⏳ Downloading...</span>
             </button>
             <button
               (click)="shareLink()"
-              class="px-6 py-3 bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
               🔗 Share It!
             </button>
             <button
               (click)="toggleUpdateStatsModal()"
-              class="px-6 py-3 bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
               📊 Update Stats
             </button>
           </div>
 
           <!-- Success Message -->
-          <div *ngIf="successMessage" class="bg-green-300 border-4 border-green-500 rounded-3xl p-6 text-center max-w-md mx-auto shadow-2xl animate-bounce">
-            <p class="text-green-800 font-black text-2xl">🎉 {{ successMessage }}</p>
+          <div *ngIf="successMessage" class="bg-green-300 border-4 border-green-500 rounded-3xl p-4 md:p-6 text-center max-w-md mx-auto shadow-2xl animate-bounce">
+            <p class="text-green-800 font-black text-lg md:text-2xl">🎉 {{ successMessage }}</p>
           </div>
 
           <!-- Cards Display -->
-          <div class="space-y-8 md:space-y-12">
-            <!-- Flippable Card Container -->
+          <div class="space-y-6 md:space-y-8 px-4">
+            <!-- Front Card -->
             <div class="flex justify-center">
-              <div class="flip-card-container" (click)="flipCard()">
-                <div class="flip-card" [class.flipped]="isFlipped">
-                  <div class="flip-card-front">
-                    <app-license-front-card [license]="license"></app-license-front-card>
-                  </div>
-                  <div class="flip-card-back">
-                    <app-license-back-card [license]="license"></app-license-back-card>
-                  </div>
-                </div>
+              <div class="card-display w-full max-w-[420px]">
+                <app-license-front-card [license]="license"></app-license-front-card>
               </div>
             </div>
 
-            <!-- Flip Instruction -->
-            <div class="text-center">
-              <p class="text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
+            <!-- Back Card -->
+            <div class="flex justify-center">
+              <div class="card-display w-full max-w-[420px]">
+                <app-license-back-card [license]="license"></app-license-back-card>
+              </div>
             </div>
 
             <!-- Certificate -->
             <div class="flex justify-center">
-              <app-license-certificate [license]="license"></app-license-certificate>
+              <div class="certificate-display w-full max-w-[800px]">
+                <app-license-certificate [license]="license"></app-license-certificate>
+              </div>
+            </div>
+
+            <!-- Hidden elements for individual downloads -->
+            <div class="hidden">
+              <div id="license-front-card">
+                <app-license-front-card [license]="license"></app-license-front-card>
+              </div>
+              <div id="license-back-card">
+                <app-license-back-card [license]="license"></app-license-back-card>
+              </div>
+              <div id="license-certificate">
+                <app-license-certificate [license]="license"></app-license-certificate>
+              </div>
             </div>
 
             <!-- Hidden container for "Download All" feature -->
@@ -150,53 +160,53 @@ import html2canvas from 'html2canvas';
           <!-- Update Stats Modal -->
           <div *ngIf="showUpdateStatsModal" class="fixed inset-0 bg-blue-900/80 backdrop-blur-md flex items-center justify-center z-50 p-4" (click)="toggleUpdateStatsModal()">
             <div class="bg-pink-300 rounded-3xl p-6 md:p-8 max-w-md w-full border-4 border-pink-500 shadow-2xl" (click)="$event.stopPropagation()">
-              <h2 class="text-3xl font-black mb-6 text-blue-900">📊 Update Your Stats!</h2>
+              <h2 class="text-2xl md:text-3xl font-black mb-6 text-blue-900">📊 Update Your Stats!</h2>
 
               <form [formGroup]="statsForm" (ngSubmit)="updateStats()">
                 <div class="space-y-4 mb-6">
                   <div>
-                    <label class="block text-lg font-bold mb-2 text-blue-900">💔 Situationships</label>
+                    <label class="block text-base md:text-lg font-bold mb-2 text-blue-900">💔 Situationships</label>
                     <input
                       type="number"
                       formControlName="situationships_count"
                       min="0"
                       max="20"
-                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-lg">
+                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-base md:text-lg">
                   </div>
 
                   <div>
-                    <label class="block text-lg font-bold mb-2 text-blue-900">📱 Dating Apps</label>
+                    <label class="block text-base md:text-lg font-bold mb-2 text-blue-900">📱 Dating Apps</label>
                     <input
                       type="number"
                       formControlName="dating_apps_count"
                       min="0"
                       max="10"
-                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-lg">
+                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-base md:text-lg">
                   </div>
 
                   <div>
-                    <label class="block text-lg font-bold mb-2 text-blue-900">👻 Ghosted Count</label>
+                    <label class="block text-base md:text-lg font-bold mb-2 text-blue-900">👻 Ghosted Count</label>
                     <input
                       type="number"
                       formControlName="ghosted_count"
                       min="0"
                       max="20"
-                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-lg">
+                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-base md:text-lg">
                   </div>
 
                   <div>
-                    <label class="block text-lg font-bold mb-2 text-blue-900">🧘 Self-Focus</label>
+                    <label class="block text-base md:text-lg font-bold mb-2 text-blue-900">🧘 Self-Focus</label>
                     <input
                       type="number"
                       formControlName="self_focus_count"
                       min="0"
                       max="50"
-                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-lg">
+                      class="w-full px-4 py-3 bg-white border-4 border-pink-400 rounded-2xl focus:outline-none focus:border-yellow-500 text-blue-900 font-semibold text-base md:text-lg">
                   </div>
                 </div>
 
                 <div *ngIf="errorMessage" class="bg-red-400 border-4 border-red-600 rounded-3xl p-4 mb-4 shadow-xl">
-                  <p class="text-white font-bold text-lg">😱 {{ errorMessage }}</p>
+                  <p class="text-white font-bold text-base md:text-lg">😱 {{ errorMessage }}</p>
                 </div>
 
                 <div class="flex gap-4">
@@ -304,55 +314,44 @@ import html2canvas from 'html2canvas';
       animation-duration: 13s;
     }
 
-    .flip-card-container {
-      perspective: 1500px;
-      cursor: pointer;
-      display: inline-block;
-      width: 100%;
-      max-width: 420px;
+    .card-display {
+      transition: transform 0.3s ease;
     }
 
-    .flip-card {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 420 / 264;
-      max-width: 420px;
-      max-height: 264px;
-      transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .flip-card.flipped {
-      transform: rotateY(180deg);
-    }
-
-    @media (max-width: 480px) {
-      .flip-card-container {
-        max-width: 340px;
-      }
-    }
-
-    .flip-card-front,
-    .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-
-    .flip-card-back {
-      transform: rotateY(180deg);
-    }
-
-    .flip-card-container:hover .flip-card {
+    .card-display:hover {
       transform: scale(1.02);
     }
 
-    .flip-card-container:hover .flip-card.flipped {
-      transform: rotateY(180deg) scale(1.02);
+    .certificate-display {
+      transition: transform 0.3s ease;
+    }
+
+    .certificate-display:hover {
+      transform: scale(1.01);
+    }
+
+    /* Responsive scaling for smaller devices */
+    @media (max-width: 480px) {
+      .card-display {
+        max-width: 95vw;
+      }
+    }
+
+    /* Hidden elements for downloads */
+    .hidden {
+      position: fixed;
+      left: -9999px;
+      top: -9999px;
+    }
+
+    .hidden #license-front-card,
+    .hidden #license-back-card {
+      width: 420px;
+      height: 264px;
+    }
+
+    .hidden #license-certificate {
+      width: 800px;
     }
 
     /* Hidden container for download all */
@@ -394,7 +393,6 @@ export class ViewLicenseComponent implements OnInit {
   errorMessage: string | null = null;
   showUpdateStatsModal = false;
   updatingStats = false;
-  isFlipped = false;
   downloadingAll = false;
 
   statsForm: FormGroup;
@@ -563,9 +561,5 @@ export class ViewLicenseComponent implements OnInit {
 
   goHome(): void {
     this.router.navigate(['/license']);
-  }
-
-  flipCard(): void {
-    this.isFlipped = !this.isFlipped;
   }
 }

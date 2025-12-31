@@ -77,8 +77,9 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     .certificate-container {
       font-family: 'Lato', sans-serif;
-      width: 700px;
-      height: 495px;
+      width: 100%;
+      max-width: 700px;
+      aspect-ratio: 700 / 495;
       background-color: #fdfcf8;
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAADFJREFUGJWVzLEBADAEw/Cj+6Z4hA6hA2gENjAhcDEa0Yvj+4Hl4ECKAAs0nJ+i2R8oAHoGzQJUNvwAAAAASUVORK5CYII=');
       position: relative;
@@ -86,12 +87,13 @@ import { License } from '../../../core/models/api/v1/license.model';
       border: 1px solid #e0d7c5;
       border-radius: 8px;
       overflow: hidden;
+      margin: 0 auto;
     }
 
     /* Border */
     .certificate-border {
       position: absolute;
-      inset: 12px;
+      inset: 1.7%;
       border: 2px solid #c0a060;
       pointer-events: none;
     }
@@ -106,7 +108,7 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     .corner-star {
       position: absolute;
-      font-size: 12px;
+      font-size: clamp(10px, 1.7vw, 12px);
       color: #c0a060;
     }
 
@@ -120,7 +122,7 @@ import { License } from '../../../core/models/api/v1/license.model';
       position: relative;
       z-index: 1;
       height: 100%;
-      padding: 32px 48px;
+      padding: 6.5% 6.8%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -130,34 +132,34 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Header */
     .header-section {
-      margin-bottom: 8px;
+      margin-bottom: 1.6%;
     }
 
     .pre-title {
-      font-size: 9px;
+      font-size: clamp(7px, 1.3vw, 9px);
       font-weight: 700;
       letter-spacing: 2px;
       color: #8b7355;
-      margin: 0 0 4px 0;
+      margin: 0 0 0.8% 0;
     }
 
     .main-title {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: clamp(20px, 4vw, 28px);
       font-weight: 700;
       color: #2c2c2c;
       margin: 0;
     }
 
     .divider {
-      width: 150px;
+      width: clamp(100px, 21.4%, 150px);
       height: 1px;
       background: linear-gradient(90deg, transparent, #c0a060, transparent);
-      margin: 8px auto;
+      margin: 1.6% auto;
     }
 
     .sub-text {
-      font-size: 11px;
+      font-size: clamp(9px, 1.6vw, 11px);
       color: #666;
       font-style: italic;
       margin: 0;
@@ -166,35 +168,36 @@ import { License } from '../../../core/models/api/v1/license.model';
     /* Recipient */
     .recipient-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 42px;
+      font-size: clamp(28px, 6vw, 42px);
       color: #8b6914;
-      margin: 8px 0;
+      margin: 1.6% 0;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     }
 
     /* Description */
     .description-text {
-      font-size: 11px;
+      font-size: clamp(9px, 1.6vw, 11px);
       line-height: 1.5;
       color: #555;
-      margin: 0 0 12px 0;
-      max-width: 450px;
+      margin: 0 0 2.4% 0;
+      max-width: 90%;
+      padding: 0 5%;
     }
 
     /* Title */
     .title-section {
-      margin-bottom: 16px;
+      margin-bottom: 3.2%;
     }
 
     .title-label {
-      font-size: 10px;
+      font-size: clamp(8px, 1.4vw, 10px);
       color: #666;
-      margin: 0 0 2px 0;
+      margin: 0 0 0.4% 0;
     }
 
     .title-value {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
+      font-size: clamp(16px, 3.1vw, 22px);
       font-weight: 700;
       color: #2c2c2c;
       margin: 0;
@@ -207,17 +210,19 @@ import { License } from '../../../core/models/api/v1/license.model';
       justify-content: space-between;
       align-items: flex-end;
       margin-top: auto;
-      padding: 0 24px;
+      padding: 0 3.4%;
+      gap: 2%;
     }
 
     .footer-block {
-      width: 140px;
+      flex: 1;
+      min-width: 0;
       text-align: center;
     }
 
     .signature-script {
       font-family: 'Great Vibes', cursive;
-      font-size: 22px;
+      font-size: clamp(16px, 3.1vw, 22px);
       color: #333;
       margin: 0;
       line-height: 1;
@@ -226,18 +231,18 @@ import { License } from '../../../core/models/api/v1/license.model';
     .footer-line {
       height: 1px;
       background: #aaa;
-      margin: 4px 0;
+      margin: 0.8% 0;
     }
 
     .footer-label {
-      font-size: 9px;
+      font-size: clamp(7px, 1.3vw, 9px);
       font-weight: 600;
       color: #666;
       margin: 0;
     }
 
     .date-value {
-      font-size: 14px;
+      font-size: clamp(11px, 2vw, 14px);
       font-weight: 700;
       color: #333;
       margin: 0;
@@ -245,8 +250,9 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Seal */
     .gold-seal {
-      width: 70px;
-      height: 70px;
+      width: clamp(50px, 10vw, 70px);
+      height: clamp(50px, 10vw, 70px);
+      flex-shrink: 0;
       border-radius: 50%;
       background: radial-gradient(ellipse at 30% 30%, #f5e6a3 0%, #d4af37 50%, #a67c00 100%);
       border: 3px solid #b8860b;
@@ -261,19 +267,19 @@ import { License } from '../../../core/models/api/v1/license.model';
     }
 
     .seal-star {
-      font-size: 14px;
+      font-size: clamp(10px, 2vw, 14px);
       line-height: 1;
     }
 
     .seal-text {
-      font-size: 9px;
+      font-size: clamp(7px, 1.3vw, 9px);
       font-weight: 800;
       letter-spacing: 0.5px;
       line-height: 1;
     }
 
     .seal-sub {
-      font-size: 8px;
+      font-size: clamp(6px, 1.1vw, 8px);
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;
@@ -281,9 +287,51 @@ import { License } from '../../../core/models/api/v1/license.model';
 
     /* Bottom Info */
     .bottom-info {
-      font-size: 8px;
+      font-size: clamp(6px, 1.1vw, 8px);
       color: #999;
-      margin: 12px 0 0 0;
+      margin: 2.4% 0 0 0;
+      word-break: break-word;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 600px) {
+      .certificate-container {
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .certificate-border {
+        inset: 2%;
+      }
+
+      .description-text {
+        max-width: 95%;
+        padding: 0 2%;
+      }
+
+      .footer-section {
+        gap: 1%;
+      }
+
+      .bottom-info {
+        font-size: 7px;
+        padding: 0 2%;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 400px) {
+      .certificate-border {
+        border-width: 1.5px;
+      }
+
+      .certificate-border::before {
+        inset: 3px;
+      }
+
+      .gold-seal {
+        border-width: 2px;
+      }
     }
   `]
 })

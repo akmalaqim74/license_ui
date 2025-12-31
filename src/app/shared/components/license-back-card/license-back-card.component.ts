@@ -62,7 +62,7 @@ interface ColorTheme {
           
           <div class="terms-box">
             <span class="section-label">Terms & Conditions</span>
-            <p class="fine-print" style="font-size: 9px;">
+            <p class="fine-print">
               This license is non-transferable. Validity subject to annual review. 
               Holder must maintain certified single status. Detection of romantic 
               entanglement results in immediate revocation. Not liable for emotional 
@@ -106,7 +106,8 @@ interface ColorTheme {
 
     @media (max-width: 480px) {
       .license-card {
-        max-width: 340px;
+        max-width: 95vw;
+        border-radius: 8px;
       }
     }
 
@@ -127,6 +128,14 @@ interface ColorTheme {
       margin-bottom: 8px;
     }
 
+    @media (max-width: 480px) {
+      .mag-stripe {
+        height: 28px;
+        margin-top: 8px;
+        margin-bottom: 6px;
+      }
+    }
+
     /* --- LAYOUT GRID --- */
     .card-content {
       flex: 1;
@@ -135,6 +144,13 @@ interface ColorTheme {
       gap: 12px;
       padding: 0 16px 12px 16px;
       overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .card-content {
+        gap: 8px;
+        padding: 0 12px 8px 12px;
+      }
     }
 
     /* --- TEXT STYLES --- */
@@ -149,11 +165,23 @@ interface ColorTheme {
       margin-top: 0;
     }
 
+    @media (max-width: 480px) {
+      .section-label {
+        font-size: 6px;
+      }
+    }
+
     /* --- LEFT COLUMN (Stats) --- */
     .stat-grid {
       display: flex;
       flex-direction: column;
       gap: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .stat-grid {
+        gap: 1px;
+      }
     }
 
     .stat-row {
@@ -163,7 +191,28 @@ interface ColorTheme {
       line-height: 1.4;
     }
 
-    .stat-row .icon { width: 16px; text-align: center; margin-right: 4px; }
+    @media (max-width: 480px) {
+      .stat-row {
+        font-size: 7px;
+        line-height: 1.3;
+      }
+    }
+
+    .stat-row .icon { 
+      width: 16px; 
+      text-align: center; 
+      margin-right: 4px; 
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .stat-row .icon {
+        width: 14px;
+        margin-right: 3px;
+        font-size: 10px;
+      }
+    }
+
     .stat-row .label { flex: 1; font-weight: 600; color: #495057; }
     .stat-row .value { font-weight: 800; color: #212529; }
 
@@ -171,10 +220,21 @@ interface ColorTheme {
     .mt-3 { margin-top: 8px !important; }
     .mb-1 { margin-bottom: 2px !important; }
 
+    @media (max-width: 480px) {
+      .mt-3 { margin-top: 6px !important; }
+      .mb-1 { margin-bottom: 1px !important; }
+    }
+
     .skills-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 3px; 
+    }
+
+    @media (max-width: 480px) {
+      .skills-wrap {
+        gap: 2px;
+      }
     }
 
     .skill-badge {
@@ -187,6 +247,14 @@ interface ColorTheme {
       line-height: 1.2;
     }
 
+    @media (max-width: 480px) {
+      .skill-badge {
+        font-size: 6px;
+        padding: 1px 3px;
+        border-radius: 3px;
+      }
+    }
+
     /* --- RIGHT COLUMN --- */
     .col-right {
       display: flex;
@@ -195,11 +263,19 @@ interface ColorTheme {
     }
 
     .fine-print {
-      font-size: 6.5px;
+      font-size: 9px;
       line-height: 1.2;
       color: #868e96;
       text-align: justify;
       letter-spacing: 0.1px;
+    }
+
+    @media (max-width: 480px) {
+      .fine-print {
+        font-size: 6.5px;
+        line-height: 1.15;
+        letter-spacing: 0px;
+      }
     }
 
     /* --- FOOTER (Sig & QR) --- */
@@ -211,6 +287,12 @@ interface ColorTheme {
       padding-top: 4px;
     }
 
+    @media (max-width: 480px) {
+      .bottom-row {
+        padding-top: 3px;
+      }
+    }
+
     .sig-title {
       font-size: 5px;
       font-weight: 700;
@@ -219,10 +301,23 @@ interface ColorTheme {
       margin-bottom: -4px;
     }
 
+    @media (max-width: 480px) {
+      .sig-title {
+        font-size: 4px;
+        margin-bottom: -3px;
+      }
+    }
+
     .sig-script {
       font-family: 'Great Vibes', cursive;
       font-size: 16px;
       color: #212529;
+    }
+
+    @media (max-width: 480px) {
+      .sig-script {
+        font-size: 13px;
+      }
     }
 
     .qr-box {
@@ -233,10 +328,24 @@ interface ColorTheme {
       border-radius: 3px;
     }
 
+    @media (max-width: 480px) {
+      .qr-box {
+        width: 30px;
+        height: 30px;
+        padding: 1px;
+      }
+    }
+
     .qr-pattern {
       width: 100%;
       height: 100%;
       background-size: 4px 4px; 
+    }
+
+    @media (max-width: 480px) {
+      .qr-pattern {
+        background-size: 3px 3px;
+      }
     }
 
     /* --- COLORS --- */

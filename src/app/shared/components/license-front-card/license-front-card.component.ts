@@ -21,14 +21,10 @@ interface ColorTheme {
         </svg>
         <div class="header-text pt-2">
           <div class="flex justify-between pb-2">
-          <span class="header-title">OFFICIAL SINGLE LICENSE</span>
-          <span class="class-value">{{ license?.lcns_title }}</span>
-          
-           
-            </div>
-             <span class="header-subtitle">Department of Self-Partnered Affairs</span>
-          
-          
+            <span class="header-title">OFFICIAL SINGLE LICENSE</span>
+            <span class="class-value">{{ license?.lcns_title }}</span>
+          </div>
+          <span class="header-subtitle">Department of Self-Partnered Affairs</span>
         </div>
       </div>
 
@@ -101,9 +97,11 @@ interface ColorTheme {
       position: relative;
     }
 
+    /* Mobile Responsive */
     @media (max-width: 480px) {
       .license-card {
-        max-width: 340px;
+        max-width: 95vw;
+        border-radius: 8px;
       }
     }
 
@@ -116,10 +114,24 @@ interface ColorTheme {
       color: white;
     }
 
+    @media (max-width: 480px) {
+      .license-header {
+        padding: 6px 12px;
+        gap: 8px;
+      }
+    }
+
     .header-icon {
       width: 24px;
       height: 24px;
       flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      .header-icon {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .header-text {
@@ -134,6 +146,13 @@ interface ColorTheme {
       margin: 0;
     }
 
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+    }
+
     .header-subtitle {
       font-size: 9px;
       opacity: 0.85;
@@ -142,20 +161,22 @@ interface ColorTheme {
       margin-top: 2px;
     }
 
-    .header-class {
-      text-align: right;
-    }
-
-    .class-label {
-      display: block;
-      font-size: 8px;
-      opacity: 0.8;
-      letter-spacing: 1px;
+    @media (max-width: 480px) {
+      .header-subtitle {
+        font-size: 7px;
+        letter-spacing: 0.3px;
+      }
     }
 
     .class-value {
       font-size: 10px;
       font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .class-value {
+        font-size: 8px;
+      }
     }
 
     /* Body */
@@ -164,6 +185,13 @@ interface ColorTheme {
       gap: 16px;
       padding: 12px 16px;
       position: relative;
+    }
+
+    @media (max-width: 480px) {
+      .license-body {
+        gap: 10px;
+        padding: 8px 12px;
+      }
     }
 
     /* Photo */
@@ -183,6 +211,15 @@ interface ColorTheme {
       justify-content: center;
     }
 
+    @media (max-width: 480px) {
+      .photo-frame {
+        width: 70px;
+        height: 85px;
+        border: 2px solid;
+        border-radius: 4px;
+      }
+    }
+
     .photo-frame img {
       width: 100%;
       height: 100%;
@@ -195,12 +232,27 @@ interface ColorTheme {
       color: #adb5bd;
     }
 
+    @media (max-width: 480px) {
+      .photo-placeholder {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
     .license-number {
       font-size: 9px;
       font-weight: 700;
       text-align: center;
       margin-top: 4px;
       letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 480px) {
+      .license-number {
+        font-size: 7px;
+        margin-top: 3px;
+        letter-spacing: 0.3px;
+      }
     }
 
     /* Info */
@@ -218,11 +270,26 @@ interface ColorTheme {
       letter-spacing: 0.5px;
     }
 
+    @media (max-width: 480px) {
+      .holder-name {
+        font-size: 14px;
+        margin: 0 0 4px 0;
+        letter-spacing: 0.3px;
+      }
+    }
+
     .data-grid {
       display: grid;
       grid-template-columns: 80px 1fr;
       gap: 1px 8px;
       line-height: 1.2;
+    }
+
+    @media (max-width: 480px) {
+      .data-grid {
+        grid-template-columns: 60px 1fr;
+        gap: 1px 6px;
+      }
     }
 
     .data-label {
@@ -233,10 +300,23 @@ interface ColorTheme {
       letter-spacing: 0.5px;
     }
 
+    @media (max-width: 480px) {
+      .data-label {
+        font-size: 7px;
+        letter-spacing: 0.3px;
+      }
+    }
+
     .data-value {
       font-size: 11px;
       font-weight: 600;
       color: #212529;
+    }
+
+    @media (max-width: 480px) {
+      .data-value {
+        font-size: 9px;
+      }
     }
 
     .data-value.expires {
@@ -250,12 +330,24 @@ interface ColorTheme {
       padding-top: 6px;
     }
 
+    @media (max-width: 480px) {
+      .signature-section {
+        padding-top: 4px;
+      }
+    }
+
     .signature-name {
       font-family: 'Great Vibes', cursive;
       font-size: 20px;
       color: #212529;
       margin: 0;
       line-height: 1;
+    }
+
+    @media (max-width: 480px) {
+      .signature-name {
+        font-size: 16px;
+      }
     }
 
     .signature-line {
@@ -268,6 +360,13 @@ interface ColorTheme {
       font-weight: 600;
       color: #6c757d;
       letter-spacing: 1px;
+    }
+
+    @media (max-width: 480px) {
+      .signature-label {
+        font-size: 6px;
+        letter-spacing: 0.5px;
+      }
     }
 
     /* Hologram */
@@ -283,6 +382,16 @@ interface ColorTheme {
       justify-content: center;
       font-size: 22px;
       animation: hologram-spin 10s linear infinite;
+    }
+
+    @media (max-width: 480px) {
+      .hologram {
+        right: 8px;
+        bottom: 8px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
     }
 
     @keyframes hologram-spin {
