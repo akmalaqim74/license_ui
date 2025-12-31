@@ -35,9 +35,6 @@ import { LicenseService } from '../../core/services/api/v1/license.service';
           <p class="text-2xl md:text-3xl text-white font-bold mb-4 drop-shadow-lg">
             🏖️ Bikini Bottom Bureau of Single Affairs 🏖️
           </p>
-          <p class="text-xl text-white/90 mb-12 font-semibold">
-            "Being single is like jellyfishing - it's way more fun than you'd think!"
-          </p>
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
@@ -56,12 +53,6 @@ import { LicenseService } from '../../core/services/api/v1/license.service';
           <!-- Find My License Section -->
           <div class="max-w-2xl mx-auto mb-20">
             <div class="bg-white/20 backdrop-blur-md rounded-3xl p-8 border-4 border-purple-400 shadow-2xl">
-              <div class="text-center mb-6">
-                <div class="text-5xl mb-3">🔍</div>
-                <h2 class="text-3xl font-black text-yellow-300 drop-shadow-lg">
-                  Already Got One? Find Your License!
-                </h2>
-              </div>
 
               <form [formGroup]="searchForm" (ngSubmit)="findLicense()" class="space-y-4">
                 <div>
@@ -88,46 +79,7 @@ import { LicenseService } from '../../core/services/api/v1/license.service';
           </div>
         </div>
 
-        <!-- Fun Statistics Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div class="bg-yellow-300 rounded-3xl p-8 border-4 border-yellow-500 shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300">
-            <div class="text-6xl mb-3">🎊</div>
-            <div class="text-5xl font-black text-blue-900 mb-2">
-              69,420
-            </div>
-            <div class="text-blue-800 text-xl font-bold">Singles Living Their Best Life!</div>
-          </div>
 
-          <div class="bg-pink-400 rounded-3xl p-8 border-4 border-pink-600 shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300">
-            <div class="text-6xl mb-3">🌟</div>
-            <div class="text-5xl font-black text-white mb-2">
-              42,069
-            </div>
-            <div class="text-white text-xl font-bold">Licenses Renewed This Year!</div>
-          </div>
-
-          <div class="bg-green-400 rounded-3xl p-8 border-4 border-green-600 shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300">
-            <div class="text-6xl mb-3">💯</div>
-            <div class="text-5xl font-black text-blue-900 mb-2">
-              100%
-            </div>
-            <div class="text-blue-800 text-xl font-bold">Officially Single & Loving It!</div>
-          </div>
-        </div>
-
-        <!-- Additional Info Section -->
-        <div class="mt-20 text-center max-w-2xl mx-auto bg-white/90 rounded-3xl p-8 border-4 border-orange-400 shadow-2xl">
-          <p class="text-2xl font-bold text-blue-900 mb-4">
-            🌈 Join the Party! 🎉
-          </p>
-          <p class="text-lg text-blue-800 leading-relaxed font-semibold">
-            Are ya ready, kids? Whether you're a Goofy Goober or a serious single,
-            we've got the PERFECT license for YOU! No pants required! 🩳
-          </p>
-          <div class="mt-6 text-4xl">
-            🍍🪸🐠🦀🦑
-          </div>
-        </div>
       </div>
     </div>
   `,

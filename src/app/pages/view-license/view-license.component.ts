@@ -89,13 +89,19 @@ import html2canvas from 'html2canvas';
           <div class="space-y-12">
             <!-- Flippable Card Container -->
             <div class="flex justify-center">
-              <div class="flip-card-container" (click)="flipCard()">
-                <div class="flip-card" [class.flipped]="isFlipped">
+              <div class="flip-card-container"
+                   (click)="flipCard()"
+                   (mousemove)="onMouseMove($event)"
+                   (mouseleave)="onMouseLeave()">
+                <div class="flip-card"
+                     [style.transform]="getCardTransform()">
                   <div class="flip-card-front">
                     <app-license-front-card [license]="license"></app-license-front-card>
+                    <div class="card-shine" [style.background]="getShineGradient()"></div>
                   </div>
                   <div class="flip-card-back">
                     <app-license-back-card [license]="license"></app-license-back-card>
+                    <div class="card-shine" [style.background]="getShineGradient()"></div>
                   </div>
                 </div>
               </div>
@@ -190,18 +196,20 @@ import html2canvas from 'html2canvas';
     .flip-card-container {
       perspective: 1500px;
       cursor: pointer;
+      display: inline-block;
     }
 
     .flip-card {
       position: relative;
       width: 420px;
       height: 264px;
-      transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
       transform-style: preserve-3d;
+      will-change: transform;
     }
 
-    .flip-card.flipped {
-      transform: rotateY(180deg);
+    .flip-card-container:hover .flip-card {
+      transition: transform 1.0s ease-out;
     }
 
     .flip-card-front,
@@ -211,18 +219,28 @@ import html2canvas from 'html2canvas';
       height: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+      overflow: hidden;
+      border-radius: 12px;
     }
 
     .flip-card-back {
       transform: rotateY(180deg);
     }
 
-    .flip-card-container:hover .flip-card {
-      transform: scale(1.02);
+    .card-shine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transition: background 0.1s ease-out;
+      border-radius: 12px;
+      mix-blend-mode: overlay;
     }
 
-    .flip-card-container:hover .flip-card.flipped {
-      transform: rotateY(180deg) scale(1.02);
+    .flip-card-container:hover .flip-card {
+      filter: brightness(1.05) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
     }
   `]
 })
@@ -239,6 +257,12 @@ export class ViewLicenseComponent implements OnInit {
   showUpdateStatsModal = false;
   updatingStats = false;
   isFlipped = false;
+
+  // 3D motion variables
+  mouseX = 0;
+  mouseY = 0;
+  cardRotateX = 0;
+  cardRotateY = 0;
 
   statsForm: FormGroup;
 
@@ -377,5 +401,37 @@ export class ViewLicenseComponent implements OnInit {
 
   flipCard(): void {
     this.isFlipped = !this.isFlipped;
+  }
+
+  onMouseMove(event: MouseEvent): void {
+    const card = event.currentTarget as HTMLElement;
+    const rect = card.getBoundingClientRect();
+
+    // Calculate mouse position relative to card center (0 to 1)
+    this.mouseX = (event.clientX - rect.left) / rect.width;
+    this.mouseY = (event.clientY - rect.top) / rect.height;
+
+    // Calculate rotation (-15 to 15 degrees)
+    this.cardRotateY = (this.mouseX - 0.5) * 30; // Horizontal tilt
+    this.cardRotateX = (this.mouseY - 0.5) * -30; // Vertical tilt
+  }
+
+  onMouseLeave(): void {
+    // Reset rotation when mouse leaves
+    this.mouseX = 0.5;
+    this.mouseY = 0.5;
+    this.cardRotateX = 0;
+    this.cardRotateY = 0;
+  }
+
+  getCardTransform(): string {
+    const baseRotateY = this.isFlipped ? 180 : 0;
+    return `rotateX(${this.cardRotateX}deg) rotateY(${baseRotateY + this.cardRotateY}deg)`;
+  }
+
+  getShineGradient(): string {
+    const x = this.mouseX * 100;
+    const y = this.mouseY * 100;
+    return `radial-gradient(circle at ${x}% ${y}%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%)`;
   }
 }
