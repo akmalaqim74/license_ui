@@ -27,32 +27,32 @@ import { LicenseService } from '../../core/services/api/v1/license.service';
          
 
           <!-- Main Headline -->
-          <h1 class="text-6xl md:text-7xl font-black mb-6 text-yellow-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]" style="text-shadow: 4px 4px 0px #FF1493, 8px 8px 0px #00BCD4;">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 text-yellow-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] px-4" style="text-shadow: 4px 4px 0px #FF1493, 8px 8px 0px #00BCD4;">
             I'm Ready! I'm Ready!<br>For My Single License!
           </h1>
 
           <!-- Subtext -->
-          <p class="text-2xl md:text-3xl text-white font-bold mb-4 drop-shadow-lg">
+          <p class="text-xl sm:text-2xl md:text-3xl text-white font-bold mb-4 drop-shadow-lg px-4">
             🏖️ Bikini Bottom Bureau of Single Affairs 🏖️
           </p>
 
           <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 px-4">
             <button
               (click)="navigateToRegister()"
-              class="px-10 py-5 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 rounded-full text-2xl font-black text-blue-900 hover:scale-110 hover:rotate-3 transition-all duration-200 shadow-2xl border-4 border-yellow-600">
-              🎉 Get My License NOW!
+              class="px-6 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 rounded-full text-xl sm:text-2xl font-black text-blue-900 hover:scale-110 hover:rotate-3 transition-all duration-200 shadow-2xl border-4 border-yellow-600">
+               Get My License NOW!
             </button>
             <button
               (click)="navigateToRenew()"
-              class="px-10 py-5 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 rounded-full text-2xl font-black text-white hover:scale-110 hover:-rotate-3 transition-all duration-200 shadow-2xl border-4 border-pink-700">
+              class="px-6 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 rounded-full text-xl sm:text-2xl font-black text-white hover:scale-110 hover:-rotate-3 transition-all duration-200 shadow-2xl border-4 border-pink-700">
               🔄 Renew My License!
             </button>
           </div>
 
           <!-- Find My License Section -->
-          <div class="max-w-2xl mx-auto mb-20">
-            <div class="bg-white/20 backdrop-blur-md rounded-3xl p-8 border-4 border-purple-400 shadow-2xl">
+          <div class="max-w-2xl mx-auto mb-20 px-4">
+            <div class="bg-white/20 backdrop-blur-md rounded-3xl p-4 sm:p-6 md:p-8 border-4 border-purple-400 shadow-2xl">
 
               <form [formGroup]="searchForm" (ngSubmit)="findLicense()" class="space-y-4">
                 <div>

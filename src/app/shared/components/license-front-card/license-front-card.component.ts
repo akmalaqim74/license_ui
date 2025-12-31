@@ -86,8 +86,9 @@ interface ColorTheme {
 
     .license-card {
       font-family: 'Inter', sans-serif;
-      width: 420px;
-      height: 264px;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 420 / 264;
       background: linear-gradient(145deg, rgba(248, 249, 250, 0.95) 0%, rgba(233, 236, 239, 0.9) 100%),
                   url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');
       background-size: cover, cover;
@@ -98,6 +99,12 @@ interface ColorTheme {
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       position: relative;
+    }
+
+    @media (max-width: 480px) {
+      .license-card {
+        max-width: 340px;
+      }
     }
 
     /* Header */

@@ -20,8 +20,22 @@ import html2canvas from 'html2canvas';
     LicenseCertificateComponent
   ],
   template: `
-    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-12 px-4" style="background-image: url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');">
-      <div class="container mx-auto max-w-6xl">
+    <div class="min-h-screen bg-gradient-to-b from-[#87CEEB] via-[#00BCD4] to-[#4FC3F7] py-12 px-4 relative overflow-hidden" style="background-image: url('/icons/Playful-Spongebob-Flower-Design-PNG-300x225.png');">
+      <!-- Bubble decorations -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="bubble" style="left: 5%; animation-delay: 0s;"></div>
+        <div class="bubble" style="left: 15%; animation-delay: 2s;"></div>
+        <div class="bubble" style="left: 25%; animation-delay: 4s;"></div>
+        <div class="bubble" style="left: 35%; animation-delay: 1s;"></div>
+        <div class="bubble" style="left: 45%; animation-delay: 3s;"></div>
+        <div class="bubble" style="left: 55%; animation-delay: 5s;"></div>
+        <div class="bubble" style="left: 65%; animation-delay: 2.5s;"></div>
+        <div class="bubble" style="left: 75%; animation-delay: 4.5s;"></div>
+        <div class="bubble" style="left: 85%; animation-delay: 1.5s;"></div>
+        <div class="bubble" style="left: 95%; animation-delay: 3.5s;"></div>
+      </div>
+
+      <div class="container mx-auto max-w-6xl relative z-10">
         <!-- Loading State -->
         <div *ngIf="loading" class="text-center py-20">
           <div class="text-6xl mb-6 animate-bounce">🧽✨</div>
@@ -52,31 +66,38 @@ import html2canvas from 'html2canvas';
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap justify-center gap-4">
+          <div class="flex flex-wrap justify-center gap-3 md:gap-4 px-4">
             <button
               (click)="downloadCard('license-front-card', 'single-license-front.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Front Card
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Front
             </button>
             <button
               (click)="downloadCard('license-back-card', 'single-license-back.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Back Card
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Back
             </button>
             <button
               (click)="downloadCard('license-certificate', 'single-license-certificate.png')"
-              class="px-6 py-3 bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
-              📥 Certificate
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-pink-400 border-4 border-pink-600 rounded-full text-white font-black hover:scale-110 hover:rotate-3 transition-all shadow-xl">
+              📥 Cert
+            </button>
+            <button
+              (click)="downloadAll()"
+              [disabled]="downloadingAll"
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-purple-700 disabled:opacity-50">
+              <span *ngIf="!downloadingAll">📥 All</span>
+              <span *ngIf="downloadingAll">⏳</span>
             </button>
             <button
               (click)="shareLink()"
-              class="px-6 py-3 bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
-              🔗 Share It!
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full text-white font-black hover:scale-110 transition-all shadow-xl border-4 border-green-700">
+              🔗 Share
             </button>
             <button
               (click)="toggleUpdateStatsModal()"
-              class="px-6 py-3 bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
-              📊 Update Stats
+              class="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-yellow-400 border-4 border-yellow-600 rounded-full text-blue-900 font-black hover:scale-110 transition-all shadow-xl">
+              📊 Stats
             </button>
           </div>
 
@@ -86,9 +107,9 @@ import html2canvas from 'html2canvas';
           </div>
 
           <!-- Cards Display -->
-          <div class="space-y-12">
+          <div class="space-y-8 md:space-y-12">
             <!-- Flippable Card Container -->
-            <div class="flex justify-center">
+            <div class="flex justify-center px-4">
               <div class="flip-card-container"
                    (click)="flipCard()"
                    (mousemove)="onMouseMove($event)"
@@ -97,24 +118,39 @@ import html2canvas from 'html2canvas';
                      [style.transform]="getCardTransform()">
                   <div class="flip-card-front">
                     <app-license-front-card [license]="license"></app-license-front-card>
-                    <div class="card-shine" [style.background]="getShineGradient()"></div>
                   </div>
                   <div class="flip-card-back">
                     <app-license-back-card [license]="license"></app-license-back-card>
-                    <div class="card-shine" [style.background]="getShineGradient()"></div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Flip Instruction -->
-            <div class="text-center">
-              <p class="text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
+            <div class="text-center px-4">
+              <p class="text-lg md:text-xl font-bold text-yellow-300 animate-pulse">👆 Click the card to flip it!</p>
             </div>
 
             <!-- Certificate -->
-            <div class="flex justify-center">
-              <app-license-certificate [license]="license"></app-license-certificate>
+            <div class="flex justify-center px-4">
+              <div class="certificate-wrapper">
+                <app-license-certificate [license]="license"></app-license-certificate>
+              </div>
+            </div>
+
+            <!-- Hidden container for "Download All" feature -->
+            <div id="all-cards-container" class="hidden-download-container">
+              <div class="download-all-layout">
+                <div class="download-card-item" id="download-front">
+                  <app-license-front-card [license]="license"></app-license-front-card>
+                </div>
+                <div class="download-card-item" id="download-back">
+                  <app-license-back-card [license]="license"></app-license-back-card>
+                </div>
+                <div class="download-certificate-item" id="download-cert">
+                  <app-license-certificate [license]="license"></app-license-certificate>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -193,16 +229,102 @@ import html2canvas from 'html2canvas';
     </div>
   `,
   styles: [`
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+      border-radius: 50%;
+      animation: float-up 15s infinite ease-in;
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .bubble:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      animation-duration: 18s;
+    }
+
+    .bubble:nth-child(3) {
+      width: 30px;
+      height: 30px;
+      animation-duration: 12s;
+    }
+
+    .bubble:nth-child(4) {
+      width: 50px;
+      height: 50px;
+      animation-duration: 20s;
+    }
+
+    .bubble:nth-child(5) {
+      width: 35px;
+      height: 35px;
+      animation-duration: 16s;
+    }
+
+    .bubble:nth-child(6) {
+      width: 45px;
+      height: 45px;
+      animation-duration: 14s;
+    }
+
+    .bubble:nth-child(7) {
+      width: 55px;
+      height: 55px;
+      animation-duration: 19s;
+    }
+
+    .bubble:nth-child(8) {
+      width: 38px;
+      height: 38px;
+      animation-duration: 17s;
+    }
+
+    .bubble:nth-child(9) {
+      width: 48px;
+      height: 48px;
+      animation-duration: 21s;
+    }
+
+    .bubble:nth-child(10) {
+      width: 42px;
+      height: 42px;
+      animation-duration: 13s;
+    }
+
     .flip-card-container {
       perspective: 1500px;
       cursor: pointer;
       display: inline-block;
+      width: 100%;
+      max-width: 420px;
     }
 
     .flip-card {
       position: relative;
-      width: 420px;
-      height: 264px;
+      width: 100%;
+      aspect-ratio: 420 / 264;
+      max-width: 420px;
+      max-height: 264px;
       transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
       transform-style: preserve-3d;
       will-change: transform;
@@ -210,6 +332,12 @@ import html2canvas from 'html2canvas';
 
     .flip-card-container:hover .flip-card {
       transition: transform 1.0s ease-out;
+    }
+
+    @media (max-width: 480px) {
+      .flip-card-container {
+        max-width: 340px;
+      }
     }
 
     .flip-card-front,
@@ -227,20 +355,54 @@ import html2canvas from 'html2canvas';
       transform: rotateY(180deg);
     }
 
-    .card-shine {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      transition: background 0.1s ease-out;
-      border-radius: 12px;
-      mix-blend-mode: overlay;
-    }
-
     .flip-card-container:hover .flip-card {
       filter: brightness(1.05) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    }
+
+    .certificate-wrapper {
+      width: 100%;
+      max-width: 800px;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 768px) {
+      .certificate-wrapper {
+        transform: scale(0.8);
+        transform-origin: top center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .certificate-wrapper {
+        transform: scale(0.6);
+        transform-origin: top center;
+      }
+    }
+
+    /* Hidden container for download all */
+    .hidden-download-container {
+      position: fixed;
+      left: -9999px;
+      top: -9999px;
+      width: 1200px;
+    }
+
+    .download-all-layout {
+      background: #FFFFFF;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .download-card-item {
+      width: 420px;
+      height: 264px;
+    }
+
+    .download-certificate-item {
+      width: 800px;
     }
   `]
 })
@@ -257,10 +419,9 @@ export class ViewLicenseComponent implements OnInit {
   showUpdateStatsModal = false;
   updatingStats = false;
   isFlipped = false;
+  downloadingAll = false;
 
   // 3D motion variables
-  mouseX = 0;
-  mouseY = 0;
   cardRotateX = 0;
   cardRotateY = 0;
 
@@ -317,7 +478,10 @@ export class ViewLicenseComponent implements OnInit {
       try {
         const canvas = await html2canvas(element, {
           scale: 2,
-          backgroundColor: null,
+          backgroundColor: '#FFFFFF',
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
         });
         const link = document.createElement('a');
         link.download = filename;
@@ -327,7 +491,37 @@ export class ViewLicenseComponent implements OnInit {
         this.showSuccessMessage('Downloaded successfully!');
       } catch (error) {
         console.error('Error downloading card:', error);
+        this.errorMessage = 'Failed to download. Please try again.';
       }
+    }
+  }
+
+  async downloadAll(): Promise<void> {
+    this.downloadingAll = true;
+    try {
+      const container = document.getElementById('all-cards-container');
+      if (container) {
+        const canvas = await html2canvas(container, {
+          scale: 2,
+          backgroundColor: '#FFFFFF',
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          width: 1200,
+          height: 1600,
+        });
+        const link = document.createElement('a');
+        link.download = 'single-license-complete.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        this.showSuccessMessage('All cards downloaded successfully!');
+      }
+    } catch (error) {
+      console.error('Error downloading all cards:', error);
+      this.errorMessage = 'Failed to download all cards. Please try again.';
+    } finally {
+      this.downloadingAll = false;
     }
   }
 
@@ -404,34 +598,27 @@ export class ViewLicenseComponent implements OnInit {
   }
 
   onMouseMove(event: MouseEvent): void {
-    const card = event.currentTarget as HTMLElement;
-    const rect = card.getBoundingClientRect();
+  const card = event.currentTarget as HTMLElement;
+  const rect = card.getBoundingClientRect();
 
-    // Calculate mouse position relative to card center (0 to 1)
-    this.mouseX = (event.clientX - rect.left) / rect.width;
-    this.mouseY = (event.clientY - rect.top) / rect.height;
+  const mouseX = (event.clientX - rect.left) / rect.width;
+  const mouseY = (event.clientY - rect.top) / rect.height;
 
-    // Calculate rotation (-15 to 15 degrees)
-    this.cardRotateY = (this.mouseX - 0.5) * 30; // Horizontal tilt
-    this.cardRotateX = (this.mouseY - 0.5) * -30; // Vertical tilt
-  }
+  // When flipped, invert the tilt direction for natural feel
+  const multiplier = this.isFlipped ? -1 : 1;
+  this.cardRotateY = (mouseX - 0.5) * 30 * multiplier;
+  this.cardRotateX = (mouseY - 0.5) * -30 * multiplier;
+}
+
 
   onMouseLeave(): void {
     // Reset rotation when mouse leaves
-    this.mouseX = 0.5;
-    this.mouseY = 0.5;
     this.cardRotateX = 0;
     this.cardRotateY = 0;
   }
 
-  getCardTransform(): string {
-    const baseRotateY = this.isFlipped ? 180 : 0;
-    return `rotateX(${this.cardRotateX}deg) rotateY(${baseRotateY + this.cardRotateY}deg)`;
-  }
-
-  getShineGradient(): string {
-    const x = this.mouseX * 100;
-    const y = this.mouseY * 100;
-    return `radial-gradient(circle at ${x}% ${y}%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%)`;
-  }
+getCardTransform(): string {
+  const baseRotateY = this.isFlipped ? 180 : 0;
+  return `rotateX(${this.cardRotateX}deg) rotateY(${baseRotateY + this.cardRotateY}deg)`;
+}
 }

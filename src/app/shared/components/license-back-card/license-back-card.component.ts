@@ -88,19 +88,26 @@ interface ColorTheme {
   styles: [`
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Great+Vibes&display=swap');
 
-    /* --- CONTAINER (Strictly 420x264) --- */
+    /* --- CONTAINER (Responsive) --- */
     .license-card {
       font-family: 'Inter', sans-serif;
-      width: 420px;
-      height: 264px;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 420 / 264;
       border-radius: 12px;
-      overflow: hidden; 
+      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       position: relative;
       display: flex;
       flex-direction: column;
       border: 1px solid #dee2e6;
       box-sizing: border-box;
+    }
+
+    @media (max-width: 480px) {
+      .license-card {
+        max-width: 340px;
+      }
     }
 
     .back-theme {
