@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Duit Raya 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  /* ===================== RESET & BASE ===================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF7F2;
+    --sand:    #EBE5D9;
+    --gold:    #C9A84C;
+    --gold-light: #DFCA8D;
+    --dark:    #24211E;
+    --muted:   #8A8178;
+    --green:   #2A4438;
+    --green-dark: #1E3329;
+    --radius:  16px;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow: hidden;
+  }
+
+  /* ===================== SCREENS ===================== */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    padding: 24px;
+  }
+  .screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+
+  /* ===================== BG DECORATION ===================== */
+  .bg-deco {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-deco::before {
+    content: '';
+    position: absolute;
+    width: 60vh; height: 60vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    top: -10vh; right: -10vh;
+  }
+  .bg-deco::after {
+    content: '';
+    position: absolute;
+    width: 50vh; height: 50vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(42,68,56,0.06) 0%, transparent 70%);
+    bottom: -10vh; left: -10vh;
+  }
+
+  /* ===================== LOGIN SCREEN ===================== */
+  #loginScreen { z-index: 10; gap: 0; }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .login-moon {
+    font-size: 42px;
+    display: block;
+    margin-bottom: 12px;
+    animation: floatMoon 3s ease-in-out infinite;
+  }
+  @keyframes floatMoon {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .login-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 8vw, 48px);
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.1;
+  }
+  .login-title span { color: var(--gold); font-style: italic; }
+  .login-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  .login-card {
+    background: #FFFFFF;
+    border-radius: var(--radius);
+    padding: 32px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    position: relative;
+    z-index: 1;
+  }
+  .login-card label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .login-card input {
+    width: 100%;
+    border: 1px solid var(--sand);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--cream);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .login-card input:focus {
+    border-color: var(--gold-light);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  .login-card input::placeholder { color: #C5BFB8; }
+
+  .btn-primary {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    background: var(--dark);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #111; transform: translateY(-1px); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary.loading { opacity: 0.7; pointer-events: none; }
+
+  .login-error {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #C0392B;
+    text-align: center;
+    min-height: 18px;
+    transition: opacity 0.3s;
+  }
+
+  /* ===================== ENVELOPE GRID SCREEN ===================== */
+  #gridScreen {
+    z-index: 10;
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding-top: 0;
+  }
+
+  .grid-header {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px 0 24px;
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to bottom, var(--cream) 80%, transparent);
+    z-index: 2;
+  }
+  .grid-greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 400;
+  }
+  .grid-greeting span { color: var(--gold); font-style: italic; }
+  .grid-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+  .envelopes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 480px;
+    padding-bottom: 40px;
+  }
+
+  /* ===================== ENVELOPE CARD ===================== */
+  .env-card {
+    aspect-ratio: 1.5;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .env-card.available {
+    background: var(--green);
+    box-shadow: 0 4px 16px rgba(42,68,56,0.15);
+  }
+  .env-card.available:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(42,68,56,0.25);
+  }
+  .env-card.available:active { transform: scale(0.96); }
+
+  .env-card.mine {
+    background: var(--green-dark);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.2);
+    border: 1px solid var(--gold);
+    cursor: default;
+  }
+  .env-card.claimed {
+    background: var(--sand);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  /* Minimal Flap */
+  .env-flap {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 45%;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: rgba(255,255,255,0.05);
+  }
+  .env-card.claimed .env-flap { background: rgba(0,0,0,0.03); }
+
+  .env-number {
+    position: absolute;
+    top: 12px; left: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+  }
+  .env-card.claimed .env-number { color: var(--muted); }
+
+  .env-status {
+    position: absolute;
+    bottom: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .env-card.available .env-status { color: rgba(255,255,255,0.8); }
+  .env-card.mine .env-status { color: var(--gold-light); }
+  .env-card.claimed .env-status { color: var(--muted); }
+
+  .env-icon { font-size: 24px; z-index: 1; margin-bottom: 8px;}
+  .env-special-badge { position: absolute; top: 12px; right: 12px; font-size: 14px; }
+
+  /* ===================== OPEN SCREEN ===================== */
+  #openScreen {
+    z-index: 20;
+    background: var(--cream);
+    padding: 24px;
+  }
+
+  .open-back {
+    position: fixed;
+    top: 24px; left: 24px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid var(--sand);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    z-index: 30;
+    transition: all 0.2s;
+  }
+  .open-back:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+  /* The envelope container */
+  .envelope-wrap {
+    position: relative;
+    width: min(360px, 90vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  /* Big envelope visual */
+  .big-envelope {
+    width: 100%;
+    aspect-ratio: 1.5;
+    position: relative;
+    border-radius: 16px;
+    filter: drop-shadow(0 16px 40px rgba(42,68,56,0.15));
+  }
+
+  .big-env-body {
+    width: 100%;
+    height: 100%;
+    background: var(--green);
+    border-radius: 16px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .big-env-body.opened { transform: translateY(30px); }
+
+  .big-env-flap {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 55%;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: #345244;
+    transform-origin: top center;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    z-index: 2;
+  }
+  .big-env-flap.open { transform: rotateX(180deg); z-index: 0; }
+
+  .big-env-flap-deco {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  .big-env-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0; top: 40%;
+    background: #20352B;
+    border-radius: 0 0 16px 16px;
+    clip-path: polygon(0 100%, 100% 100%, 100% 0, 50% 40%, 0 0);
+  }
+
+  /* Gold ornament in center */
+  .env-ornament {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    z-index: 3;
+    transition: opacity 0.3s;
+  }
+  .big-env-flap.open ~ .env-ornament { opacity: 0; }
+
+  /* ── Reveal card ── */
+  .reveal-card {
+    width: min(360px, 90vw);
+    height: 65vh;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-card.slide-out {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-20px);
+  }
+
+  /* Slider */
+  .card-slider {
+    display: flex;
+    width: 200%;
+    flex: 1;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .card-slider.show-qr { transform: translateX(-50%); }
+
+  .card-page {
+    width: 50%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===================== PAGE 1 — LETTER ===================== */
+  .page-letter {
+    flex: 1;
+    background-color: #FCFAf5; /* Clean Ivory */
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: relative;
+  }
+  
+  .letter-date {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .letter-salutation {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+  
+  .letter-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: #4A443D;
+    line-height: 1.8;
+    flex: 1;
+    font-style: italic;
+  }
+
+  .letter-footer {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--sand);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .letter-sign {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .letter-sign-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  /* ===================== PAGE 2 — QR ===================== */
+  .page-qr {
+    flex: 1;
+    background: #FFFFFF; /* Clean White */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .qr-img {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border: 1px solid var(--sand);
+    padding: 16px;
+    background: #FFFFFF;
+  }
+
+  .qr-placeholder {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream);
+    border-radius: 12px;
+    border: 1px dashed #D0CBC2;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Pagination dots ── */
+  .card-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+    background: #FFFFFF;
+    border-top: 1px solid var(--cream);
+  }
+  .card-dot {
+    width: 6px; height: 6px;
+    border-radius: 3px;
+    background: var(--sand);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .card-dot.active {
+    background: var(--gold);
+    width: 16px;
+  }
+
+  /* ===================== LOADING ===================== */
+  .full-loader {
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    flex-direction: column;
+    gap: 16px;
+    transition: opacity 0.5s;
+  }
+  .full-loader.gone { opacity: 0; pointer-events: none; }
+  .loader-moon { font-size: 32px; animation: floatMoon 2s ease-in-out infinite; }
+  .loader-text {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <div class="full-loader" id="loader">
+    <span class="loader-moon">🌙</span>
+    <div class="loader-text">Menyemak Sampul...</div>
+  </div>
+
+  <div class="bg-deco"></div>
+
+  <div class="screen" id="loginScreen">
+    <div class="login-header">
+      <span class="login-moon">🌙</span>
+      <h1 class="login-title">Duit <span>Raya</span></h1>
+      <div class="login-sub">Masukkan kod rahsia anda</div>
+    </div>
+    <div class="login-card">
+      <label>Kod Jemputan</label>
+      <input type="text" id="loginInput" placeholder="Contoh: RAYA2026" autocomplete="off" />
+      <div class="login-error" id="loginError"></div>
+      <button class="btn-primary" id="loginBtn">Buka Sampul</button>
+    </div>
+  </div>
+
+  <div class="screen hidden" id="gridScreen">
+    <div class="grid-header">
+      <h2 class="grid-greeting">Selamat Hari Raya, <span>Ali!</span></h2>
+      <div class="grid-sub">Pilih sampul duit raya anda di bawah.</div>
+    </div>
+    <div class="envelopes-grid" id="envGrid">
+      </div>
+  </div>
+
+  <div class="screen hidden" id="openScreen">
+    <button class="open-back" id="backBtn">✕</button>
+    
+    <div class="envelope-wrap">
+      <div class="big-envelope">
+        <div class="big-env-body" id="bigEnvBody">
+          <div class="big-env-flap" id="bigEnvFlap">
+            <div class="big-env-flap-deco"></div>
+          </div>
+          <div class="big-env-bottom"></div>
+        </div>
+        <div class="env-ornament">🌙</div>
+      </div>
+
+      <div class="reveal-card" id="revealCard">
+        <div class="card-slider" id="cardSlider">
+          
+          <div class="card-page page-letter">
+            <div class="letter-date">Syawal 1447H</div>
+            <div class="letter-salutation">Kepada,</div>
+            <h3 class="letter-name">Ali Bin Abu</h3>
+            <p class="letter-body">Semoga Aidilfitri ini membawa seribu rahmat, keampunan, dan kebahagiaan buat anda dan keluarga. Maaf Zahir & Batin!</p>
+            <div class="letter-footer">
+              <div>
+                <div class="letter-sign">Ikhlas Dari,</div>
+                <div class="letter-sign-name">Ahmad & Keluarga</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-page page-qr">
+            <div class="qr-placeholder">
+              <span style="font-size: 32px; margin-bottom: 8px;">📷</span>
+              QR Duit Raya
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="card-dots" id="cardDots">
+          <div class="card-dot active" data-index="0"></div>
+          <div class="card-dot" data-index="1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const loader = document.getElementById('loader');
+      const loginScreen = document.getElementById('loginScreen');
+      const gridScreen = document.getElementById('gridScreen');
+      const openScreen = document.getElementById('openScreen');
+      
+      const loginBtn = document.getElementById('loginBtn');
+      const envGrid = document.getElementById('envGrid');
+      const backBtn = document.getElementById('backBtn');
+      
+      // Envelope Animation Elements
+      const bigEnvFlap = document.getElementById('bigEnvFlap');
+      const bigEnvBody = document.getElementById('bigEnvBody');
+      const revealCard = document.getElementById('revealCard');
+      
+      // Slider Elements
+      const cardSlider = document.getElementById('cardSlider');
+      const cardDots = document.querySelectorAll('.card-dot');
+
+      // 1. Remove Loader
+      setTimeout(() => {
+        loader.classList.add('gone');
+      }, 800);
+
+      // 2. Handle Login
+      loginBtn.addEventListener('click', () => {
+        loginBtn.classList.add('loading');
+        loginBtn.innerText = "Sabar jap...";
+        
+        setTimeout(() => {
+          loginScreen.classList.add('hidden');
+          gridScreen.classList.remove('hidden');
+          renderGrid();
+        }, 600);
+      });
+
+      // 3. Render Dummy Envelopes
+      function renderGrid() {
+        const envelopes = [
+          { status: 'available', num: '01' },
+          { status: 'claimed', num: '02' },
+          { status: 'mine', num: '03' },
+          { status: 'available', num: '04' }
+        ];
+
+        envGrid.innerHTML = envelopes.map(env => `
+          <div class="env-card ${env.status}">
+            <div class="env-flap"></div>
+            <div class="env-number">${env.num}</div>
+            <div class="env-icon">✉️</div>
+            <div class="env-status">${env.status === 'available' ? 'Buka' : env.status === 'mine' ? 'Milik Anda' : 'Telah Dibuka'}</div>
+          </div>
+        `).join('');
+
+        // Add click events to openable envelopes
+        document.querySelectorAll('.env-card.available, .env-card.mine').forEach(card => {
+          card.addEventListener('click', openEnvelope);
+        });
+      }
+
+      // 4. Open Envelope Sequence
+      function openEnvelope() {
+        gridScreen.classList.add('hidden');
+        openScreen.classList.remove('hidden');
+
+        // Reset slider to page 1
+        goToPage(0);
+
+        // Sequence: Open Flap -> Slide Out Card
+        setTimeout(() => {
+          bigEnvFlap.classList.add('open');
+        }, 100);
+
+        setTimeout(() => {
+          bigEnvBody.classList.add('opened');
+          revealCard.classList.add('slide-out');
+        }, 600);
+      }
+
+      // 5. Close Envelope Sequence
+      backBtn.addEventListener('click', () => {
+        // Sequence: Slide In Card -> Close Flap -> Show Grid
+        revealCard.classList.remove('slide-out');
+        bigEnvBody.classList.remove('opened');
+        
+        setTimeout(() => {
+          bigEnvFlap.classList.remove('open');
+        }, 400);
+
+        setTimeout(() => {
+          openScreen.classList.add('hidden');
+          gridScreen.classList.remove('hidden');
+        }, 800);
+      });
+
+      // 6. Handle Slider (Dots & Swipe)
+      function goToPage(index) {
+        if (index === 1) {
+          cardSlider.classList.add('show-qr');
+        } else {
+          cardSlider.classList.remove('show-qr');
+        }
+        
+        cardDots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }
+
+      cardDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => goToPage(index));
+      });
+
+      // Mobile Swipe Logic
+      let startX = 0;
+    
