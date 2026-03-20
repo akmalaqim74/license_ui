@@ -307,6 +307,7 @@
     flex-direction: column;
     align-items: center;
     z-index: 2;
+    margin-top: 40px; /* push envelope down a bit */
   }
 
   /* Big envelope visual */
@@ -368,6 +369,45 @@
     transition: opacity 0.3s;
   }
   .big-env-flap.open ~ .env-ornament { opacity: 0; }
+
+  /* Swipe hint */
+  .swipe-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    transition: opacity 0.3s;
+  }
+  .swipe-hint.hidden { opacity: 0; pointer-events: none; }
+  .swipe-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .swipe-arrow-dot {
+    display: block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: swipeDotFade 1.5s ease infinite;
+  }
+  .swipe-arrow-dot:nth-child(1) { animation-delay: 0s; }
+  .swipe-arrow-dot:nth-child(2) { animation-delay: 0.2s; }
+  .swipe-arrow-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes swipeDotFade {
+    0%,100% { opacity: 0.2; transform: translateY(0); }
+    50%      { opacity: 1;   transform: translateY(-4px); }
+  }
+  .swipe-hint-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
 
   /* ── Reveal card ── */
   .reveal-card {
@@ -559,6 +599,81 @@
     text-transform: uppercase;
     color: var(--muted);
   }
+
+  /* ===================== COUNTDOWN SCREEN ===================== */
+  #countdownScreen {
+    z-index: 15;
+    gap: 0;
+    text-align: center;
+  }
+  .countdown-moon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 16px;
+    animation: floatMoon 3s ease-in-out infinite;
+  }
+  .countdown-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .countdown-title span { color: var(--gold); font-style: italic; }
+  .countdown-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+  .countdown-boxes {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .countdown-box {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 12px 12px;
+    min-width: 72px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .countdown-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .countdown-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .countdown-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid var(--sand);
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .countdown-date-badge span { color: var(--gold); font-weight: 500; }
 </style>
 </head>
 <body>
@@ -570,15 +685,43 @@
 
   <div class="bg-deco"></div>
 
+  <!-- Countdown screen — shown before 21 Mac 2026 8am -->
+  <div class="screen hidden" id="countdownScreen">
+    <span class="countdown-moon">🌙</span>
+    <h1 class="countdown-title">Duit <span>Raya</span><br/>Belum Tiba</h1>
+    <p class="countdown-sub">Sampul akan dibuka pada Hari Raya Aidilfitri</p>
+    <div class="countdown-boxes">
+      <div class="countdown-box">
+        <div class="countdown-num" id="cdDays">00</div>
+        <div class="countdown-label">Hari</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-num" id="cdHours">00</div>
+        <div class="countdown-label">Jam</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-num" id="cdMins">00</div>
+        <div class="countdown-label">Minit</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-num" id="cdSecs">00</div>
+        <div class="countdown-label">Saat</div>
+      </div>
+    </div>
+    <div class="countdown-date-badge">
+      🗓 Dibuka pada <span>21 Mac 2026, 8:00 Pagi</span>
+    </div>
+  </div>
+
   <div class="screen" id="loginScreen">
     <div class="login-header">
       <span class="login-moon">🌙</span>
       <h1 class="login-title">Duit <span>Raya</span></h1>
-      <div class="login-sub">Masukkan kod rahsia anda</div>
+      <div class="login-sub">Enter your phone number</div>
     </div>
     <div class="login-card">
-      <label>Kod Jemputan</label>
-      <input type="text" id="loginInput" placeholder="Contoh: RAYA2026" autocomplete="off" />
+      <label>Phone Number</label>
+      <input type="text" id="loginInput" placeholder="e.g. 0123456789" autocomplete="off" />
       <div class="login-error" id="loginError"></div>
       <button class="btn-primary" id="loginBtn">Buka Sampul</button>
     </div>
@@ -605,6 +748,16 @@
           <div class="big-env-bottom"></div>
         </div>
         <div class="env-ornament">🌙</div>
+      </div>
+
+      <!-- Swipe hint -->
+      <div class="swipe-hint" id="swipeHint">
+        <div class="swipe-arrows">
+          <span class="swipe-arrow-dot"></span>
+          <span class="swipe-arrow-dot"></span>
+          <span class="swipe-arrow-dot"></span>
+        </div>
+        <div class="swipe-hint-label">Swipe up to open</div>
       </div>
 
       <div class="reveal-card" id="revealCard">
@@ -641,119 +794,480 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // DOM Elements
-      const loader = document.getElementById('loader');
-      const loginScreen = document.getElementById('loginScreen');
-      const gridScreen = document.getElementById('gridScreen');
-      const openScreen = document.getElementById('openScreen');
-      
-      const loginBtn = document.getElementById('loginBtn');
-      const envGrid = document.getElementById('envGrid');
-      const backBtn = document.getElementById('backBtn');
-      
-      // Envelope Animation Elements
-      const bigEnvFlap = document.getElementById('bigEnvFlap');
-      const bigEnvBody = document.getElementById('bigEnvBody');
-      const revealCard = document.getElementById('revealCard');
-      
-      // Slider Elements
-      const cardSlider = document.getElementById('cardSlider');
-      const cardDots = document.querySelectorAll('.card-dot');
+// =========================================================
+//  ⚙️  CONFIG — paste your JSONBin credentials here
+// =========================================================
+const CONFIG = {
+  BIN_ID:  '69bcdf62b7ec241ddc85df69',
+  API_KEY: '$2a$10$1M5NGbytzGkncVIPbiKHneIhWkHQ9gRkalQNihoL4GXQo69wdGN7G',
+};
+// =========================================================
 
-      // 1. Remove Loader
-      setTimeout(() => {
-        loader.classList.add('gone');
-      }, 800);
+const BASE_URL = `https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}`;
 
-      // 2. Handle Login
-      loginBtn.addEventListener('click', () => {
-        loginBtn.classList.add('loading');
-        loginBtn.innerText = "Sabar jap...";
-        
-        setTimeout(() => {
-          loginScreen.classList.add('hidden');
-          gridScreen.classList.remove('hidden');
-          renderGrid();
-        }, 600);
-      });
+// ── State ──
+let db          = null;
+let currentUser = null;  // { phone, name, special }
+let currentEnvIdx = null;
+let currentPage   = 0;
 
-      // 3. Render Dummy Envelopes
-      function renderGrid() {
-        const envelopes = [
-          { status: 'available', num: '01' },
-          { status: 'claimed', num: '02' },
-          { status: 'mine', num: '03' },
-          { status: 'available', num: '04' }
-        ];
+// ── Swipe state (envelope) ──
+let swipeStartY = 0;
+let swipeDelta  = 0;
+let swipeLocked = false;
+let isOpened    = false;
 
-        envGrid.innerHTML = envelopes.map(env => `
-          <div class="env-card ${env.status}">
-            <div class="env-flap"></div>
-            <div class="env-number">${env.num}</div>
-            <div class="env-icon">✉️</div>
-            <div class="env-status">${env.status === 'available' ? 'Buka' : env.status === 'mine' ? 'Milik Anda' : 'Telah Dibuka'}</div>
-          </div>
-        `).join('');
+// ── Swipe state (card slider) ──
+let cardStartX = 0;
+let cardDelta  = 0;
 
-        // Add click events to openable envelopes
-        document.querySelectorAll('.env-card.available, .env-card.mine').forEach(card => {
-          card.addEventListener('click', openEnvelope);
-        });
-      }
+// =========================================================
+//  DB
+// =========================================================
+async function loadDB() {
+  const res = await fetch(BASE_URL, {
+    method: 'GET',
+    headers: { 'X-Master-Key': CONFIG.API_KEY, 'X-Bin-Meta': 'false' },
+  });
+  if (!res.ok) throw new Error(`JSONBin GET ${res.status}`);
+  db = await res.json();
+}
 
-      // 4. Open Envelope Sequence
-      function openEnvelope() {
-        gridScreen.classList.add('hidden');
-        openScreen.classList.remove('hidden');
+async function saveDB() {
+  const res = await fetch(BASE_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'X-Master-Key': CONFIG.API_KEY },
+    body: JSON.stringify(db),
+  });
+  if (!res.ok) throw new Error(`JSONBin PUT ${res.status}`);
+}
 
-        // Reset slider to page 1
-        goToPage(0);
+// =========================================================
+//  HELPERS
+// =========================================================
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-        // Sequence: Open Flap -> Slide Out Card
-        setTimeout(() => {
-          bigEnvFlap.classList.add('open');
-        }, 100);
+function showScreen(id) {
+  ['countdownScreen', 'loginScreen', 'gridScreen', 'openScreen'].forEach(s => {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
+  });
+}
 
-        setTimeout(() => {
-          bigEnvBody.classList.add('opened');
-          revealCard.classList.add('slide-out');
-        }, 600);
-      }
+function hideLoader() {
+  const el = document.getElementById('loader');
+  if (el) { el.classList.add('gone'); setTimeout(() => el.remove(), 600); }
+}
 
-      // 5. Close Envelope Sequence
-      backBtn.addEventListener('click', () => {
-        // Sequence: Slide In Card -> Close Flap -> Show Grid
-        revealCard.classList.remove('slide-out');
-        bigEnvBody.classList.remove('opened');
-        
-        setTimeout(() => {
-          bigEnvFlap.classList.remove('open');
-        }, 400);
+function showError(msg) {
+  const el = document.getElementById('loginError');
+  if (el) el.textContent = msg;
+}
 
-        setTimeout(() => {
-          openScreen.classList.add('hidden');
-          gridScreen.classList.remove('hidden');
-        }, 800);
-      });
+// =========================================================
+//  INIT
+// =========================================================
+// =========================================================
+//  GATE SCHEDULE (MYT = UTC+8)
+//  - Now → 20 Mac 5:30 PM  : OPEN  (testing)
+//  - 20 Mac 5:30 PM → 21 Mac 8:00 AM : LOCKED
+//  - 21 Mac 8:00 AM onwards : OPEN forever
+// =========================================================
+const TEST_CLOSE = new Date('2026-03-20T17:30:00+08:00'); // 20 Mac 5:30 PM
+const OPEN_TIME  = new Date('2026-03-21T08:00:00+08:00'); // 21 Mac 8:00 AM
 
-      // 6. Handle Slider (Dots & Swipe)
-      function goToPage(index) {
-        if (index === 1) {
-          cardSlider.classList.add('show-qr');
-        } else {
-          cardSlider.classList.remove('show-qr');
-        }
-        
-        cardDots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-      }
+function isUnlocked() {
+  const now = new Date();
+  // Open now until 5:30pm today
+  if (now < TEST_CLOSE) return true;
+  // Locked between 5:30pm today and 8am tomorrow
+  if (now >= TEST_CLOSE && now < OPEN_TIME) return false;
+  // Open from 8am tomorrow onwards
+  return true;
+}
 
-      cardDots.forEach((dot, index) => {
-        dot.addEventListener('click', () => goToPage(index));
-      });
+function startCountdown() {
+  showScreen('countdownScreen');
 
-      // Mobile Swipe Logic
-      let startX = 0;
-    
+  function tick() {
+    const now  = new Date();
+    const diff = OPEN_TIME - now;
+
+    if (diff <= 0) {
+      // Time's up — reload to proceed
+      location.reload();
+      return;
+    }
+
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cdDays').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cdMins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cdSecs').textContent  = String(secs).padStart(2,'0');
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // ── Gate check ──
+  if (!isUnlocked()) {
+    hideLoader();
+    startCountdown();
+    return;
+  }
+
+  // ── Normal flow ──
+  const saved = localStorage.getItem('raya_user');
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+      await loadDB();
+      hideLoader();
+      showGrid();
+      return;
+    } catch(e) {
+      localStorage.removeItem('raya_user');
+      currentUser = null;
+    }
+  }
+  hideLoader();
+  showScreen('loginScreen');
+
+  // Enter key support
+  document.getElementById('loginInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+  document.getElementById('loginBtn').addEventListener('click', handleLogin);
+});
+
+// =========================================================
+//  LOGIN
+// =========================================================
+async function handleLogin() {
+  const input = document.getElementById('loginInput').value.trim().replace(/\s/g, '');
+  const btn   = document.getElementById('loginBtn');
+
+  showError('');
+  if (!input) { showError('Sila masukkan nombor telefon.'); return; }
+
+  btn.classList.add('loading');
+  btn.innerText = 'Sabar jap...';
+
+  try {
+    await loadDB();
+    const guest = db.guests.find(g => g.phone === input);
+    if (!guest) {
+      showError('Nombor tidak dijumpai dalam senarai jemputan. 😔');
+      btn.classList.remove('loading');
+      btn.innerText = 'Buka Sampul';
+      return;
+    }
+    currentUser = { phone: guest.phone, name: guest.name, special: !!guest.special };
+    localStorage.setItem('raya_user', JSON.stringify(currentUser));
+    showGrid();
+  } catch(e) {
+    showError('Ralat sambungan. Cuba semula.');
+    btn.classList.remove('loading');
+    btn.innerText = 'Buka Sampul';
+  }
+}
+
+// =========================================================
+//  GRID
+// =========================================================
+function showGrid() {
+  // Update greeting
+  document.querySelector('.grid-greeting').innerHTML =
+    `Selamat Hari Raya, <span>${currentUser.name}!</span>`;
+
+  const myEnv = db.envelopes.find(e => e.claimedBy === currentUser.phone);
+  document.querySelector('.grid-sub').textContent = myEnv
+    ? `Anda telah ambil Sampul #${myEnv.id} 🎉`
+    : 'Pilih sampul duit raya anda di bawah.';
+
+  renderGrid();
+  showScreen('gridScreen');
+}
+
+function renderGrid() {
+  const grid = document.getElementById('envGrid');
+  grid.innerHTML = '';
+
+  const myEnvExists = db.envelopes.some(e => e.claimedBy === currentUser.phone);
+
+  db.envelopes.forEach((env, idx) => {
+    const isMine    = env.claimedBy === currentUser.phone;
+    const isClaimed = !!env.claimedBy && !isMine;
+    const isLocked  = !isMine && myEnvExists;
+
+    let stateClass = 'available';
+    if (isMine)                       stateClass = 'mine';
+    else if (isClaimed || isLocked)   stateClass = 'claimed';
+
+    const firstName = env.claimedName ? env.claimedName.split(' ')[0] : '';
+    let statusText  = 'Buka';
+    if (isMine)    statusText = 'Milik Anda';
+    else if (isClaimed) statusText = `${firstName}`;
+    else if (isLocked)  statusText = 'Telah Dibuka';
+
+    const card = document.createElement('div');
+    card.className = `env-card ${stateClass}`;
+    card.innerHTML = `
+      <div class="env-flap"></div>
+      <div class="env-number">${String(idx + 1).padStart(2,'0')}</div>
+      <div class="env-icon">✉️</div>
+      <div class="env-status">${statusText}</div>
+    `;
+
+    if (isMine) {
+      card.addEventListener('click', () => openEnvelope(idx, true));
+    } else if (stateClass === 'available') {
+      card.addEventListener('click', () => openEnvelope(idx, false));
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// =========================================================
+//  OPEN ENVELOPE
+// =========================================================
+async function openEnvelope(idx, alreadyMine) {
+  currentEnvIdx = idx;
+  isOpened      = false;
+  swipeLocked   = false;
+  currentPage   = 0;
+
+  const env       = db.envelopes[idx];
+  const isSpecial = currentUser.special;
+
+  // ── Populate letter ──
+  const d = new Date();
+  document.querySelector('.letter-date').textContent =
+    'Syawal 1447H · ' + d.toLocaleDateString('ms-MY', { day:'numeric', month:'long', year:'numeric' });
+
+  document.querySelector('.letter-name').textContent = currentUser.name;
+
+  const bodyEl = document.querySelector('.letter-body');
+  if (isSpecial) {
+    bodyEl.textContent = db.specialMessage || 'Awak sangat istimewa buat saya. 💛';
+  } else {
+    const msgObj = db.messages ? db.messages.find(m => m.id === env.id) : null;
+    bodyEl.textContent = msgObj ? msgObj.text : 'Selamat Hari Raya! Maaf Zahir & Batin. 🌙';
+  }
+
+  // ── Populate QR ──
+  const qrPage = document.querySelector('.page-qr');
+  qrPage.innerHTML = env.qr && env.qr.trim() !== ''
+    ? `<img class="qr-img" src="${env.qr}" alt="QR Duit Raya" />`
+    : `<div class="qr-placeholder"><span style="font-size:32px;margin-bottom:8px;">📷</span>QR Duit Raya</div>`;
+
+  // ── Reset states ──
+  const bigEnvFlap = document.getElementById('bigEnvFlap');
+  const bigEnvBody = document.getElementById('bigEnvBody');
+  const revealCard = document.getElementById('revealCard');
+  const cardSlider = document.getElementById('cardSlider');
+  const swipeHint  = document.getElementById('swipeHint');
+
+  bigEnvFlap.classList.remove('open');
+  bigEnvBody.classList.remove('opened');
+  revealCard.classList.remove('slide-out');
+  cardSlider.classList.remove('show-qr');
+  if (swipeHint) swipeHint.classList.remove('hidden');
+  goToPage(0);
+
+  showScreen('openScreen');
+  setupEnvelopeSwipe();
+  setupCardSwipe();
+
+  // If already mine — auto open
+  if (alreadyMine) {
+    await delay(400);
+    triggerOpen();
+  }
+}
+
+// =========================================================
+//  OPEN ANIMATION
+// =========================================================
+async function triggerOpen() {
+  if (isOpened || swipeLocked) return;
+  swipeLocked = true;
+  isOpened    = true;
+
+  const bigEnvFlap = document.getElementById('bigEnvFlap');
+  const bigEnvBody = document.getElementById('bigEnvBody');
+  const revealCard = document.getElementById('revealCard');
+
+  // Step 0 — hide swipe hint
+  const swipeHint = document.getElementById('swipeHint');
+  if (swipeHint) swipeHint.classList.add('hidden');
+
+  // Step 1 — open flap
+  bigEnvFlap.classList.add('open');
+  await delay(700);
+
+  // Step 2 — body drops
+  bigEnvBody.classList.add('opened');
+  await delay(400);
+
+  // Step 3 — card slides out
+  revealCard.classList.add('slide-out');
+  await delay(300);
+
+  // Step 4 — confetti
+  spawnConfetti();
+
+  // Step 5 — claim in DB
+  const alreadyClaimed = db.envelopes.find(e => e.claimedBy === currentUser.phone);
+  if (!alreadyClaimed) {
+    db.envelopes[currentEnvIdx].claimedBy   = currentUser.phone;
+    db.envelopes[currentEnvIdx].claimedName = currentUser.name;
+    try { await saveDB(); } catch(e) { console.error('Save failed', e); }
+  }
+}
+
+// =========================================================
+//  ENVELOPE SWIPE UP
+// =========================================================
+function setupEnvelopeSwipe() {
+  const el = document.querySelector('.big-envelope');
+  const fresh = el.cloneNode(true);
+  el.parentNode.replaceChild(fresh, el);
+  swipeLocked = false;
+
+  fresh.addEventListener('touchstart', e => {
+    swipeStartY = e.touches[0].clientY;
+    swipeDelta  = 0;
+  }, { passive: true });
+
+  fresh.addEventListener('touchmove', e => {
+    if (swipeLocked) return;
+    swipeDelta = swipeStartY - e.touches[0].clientY;
+    if (swipeDelta > 5) e.preventDefault();
+  }, { passive: false });
+
+  fresh.addEventListener('touchend', () => {
+    if (swipeDelta > 60) triggerOpen();
+    swipeDelta = 0;
+  }, { passive: true });
+
+  // Mouse drag (desktop)
+  fresh.addEventListener('mousedown', e => {
+    swipeStartY = e.clientY;
+    const onMove = ev => { swipeDelta = swipeStartY - ev.clientY; };
+    const onUp   = ()  => {
+      if (swipeDelta > 60) triggerOpen();
+      swipeDelta = 0;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  });
+}
+
+// =========================================================
+//  CARD SWIPE LEFT / RIGHT
+// =========================================================
+function setupCardSwipe() {
+  const el = document.getElementById('revealCard');
+  const fresh = el.cloneNode(true);
+  el.parentNode.replaceChild(fresh, el);
+
+  // Re-attach dot clicks after clone
+  fresh.querySelectorAll('.card-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => goToPage(i));
+  });
+
+  fresh.addEventListener('touchstart', e => {
+    cardStartX = e.touches[0].clientX;
+    cardDelta  = 0;
+  }, { passive: true });
+
+  fresh.addEventListener('touchend', e => {
+    cardDelta = cardStartX - e.changedTouches[0].clientX;
+    if (cardDelta > 50 && currentPage === 0) goToPage(1);
+    if (cardDelta < -50 && currentPage === 1) goToPage(0);
+  }, { passive: true });
+
+  fresh.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('card-dot')) return;
+    cardStartX = e.clientX;
+    const onUp = ev => {
+      cardDelta = cardStartX - ev.clientX;
+      if (cardDelta > 50 && currentPage === 0) goToPage(1);
+      if (cardDelta < -50 && currentPage === 1) goToPage(0);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mouseup', onUp);
+  });
+}
+
+function goToPage(index) {
+  currentPage = index;
+  const slider = document.getElementById('cardSlider');
+  if (slider) slider.classList.toggle('show-qr', index === 1);
+  document.querySelectorAll('.card-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+// =========================================================
+//  BACK BUTTON
+// =========================================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('backBtn').addEventListener('click', async () => {
+    const revealCard = document.getElementById('revealCard');
+    const bigEnvBody = document.getElementById('bigEnvBody');
+    const bigEnvFlap = document.getElementById('bigEnvFlap');
+
+    revealCard.classList.remove('slide-out');
+    bigEnvBody.classList.remove('opened');
+    await delay(300);
+    bigEnvFlap.classList.remove('open');
+    await delay(500);
+
+    try { await loadDB(); } catch(e) {}
+    showGrid();
+  });
+});
+
+// =========================================================
+//  CONFETTI
+// =========================================================
+function spawnConfetti() {
+  const colors = ['#C9A84C', '#2A4438', '#DFCA8D', '#FAF7F2', '#8B6914'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position:fixed; pointer-events:none; z-index:999;
+      left:${Math.random()*100}vw; top:-10px;
+      width:${4+Math.random()*7}px; height:${4+Math.random()*7}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation: confettiFall ${1.5+Math.random()*2}s linear ${Math.random()*0.5}s forwards;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+  // inject keyframe once
+  if (!document.getElementById('confettiStyle')) {
+    const s = document.createElement('style');
+    s.id = 'confettiStyle';
+    s.textContent = `@keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity:1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity:0; }
+    }`;
+    document.head.appendChild(s);
+  }
+}
+</script>
+</body>
+</html>
